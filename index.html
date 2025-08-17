@@ -22,22 +22,74 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* Dark mode styles (simplified for brevity) */
+        /* Qora rejim klassi */
         body.dark-mode {
             background: #121212;
             color: #fff;
         }
 
-        .dark-mode .login-container,
-        .dark-mode .login-input,
-        .dark-mode .app-container,
-        .dark-mode .header,
+        .dark-mode .login-container {
+            background: rgba(0, 0, 0, 0.5);
+            /* Qora rejimda ham orqa fon transparent bo'lsin */
+            color: #fff;
+        }
+
+        .dark-mode .login-input {
+            background: #333;
+            border-color: #666;
+            color: #fff;
+        }
+
+        .dark-mode .app-container {
+            background: #333;
+        }
+
+        .dark-mode .header {
+            background: linear-gradient(135deg, #D35400 0%, #BA4A00 100%);
+        }
+
         .dark-mode .nav-tabs,
         .dark-mode .section-nav,
         .dark-mode .content-item,
         .dark-mode .profile-menu,
         .dark-mode .modal-content {
-            background: #333;
+            /* Modal content ham qora rejimga moslash */
+            background: #424242;
+            box-shadow: 0 2px 10px rgba(255, 255, 255, 0.05);
+            color: #eee;
+            /* Matn rangini moslash */
+        }
+
+        .dark-mode .nav-tab,
+        .dark-mode .section-tab,
+        .dark-mode .profile-menu-item,
+        .dark-mode .modal-header,
+        .dark-mode .close-modal {
+            /* Modal header va close button rangini moslash */
+            color: #eee;
+        }
+
+        .dark-mode .content-title,
+        .dark-mode .profile-name {
+            color: #fff;
+        }
+
+        .dark-mode .announcement-item {
+            background: #555;
+            border-left-color: #D35400;
+            color: #eee;
+        }
+
+        .dark-mode .search-input {
+            background: #555;
+            color: #eee;
+        }
+
+        .dark-mode .bottom-nav {
+            background: #424242;
+        }
+
+        .dark-mode .bottom-nav-item {
             color: #eee;
         }
 
@@ -48,6 +100,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            /* Orqa fon GIF */
             background: url('https://i.ibb.co/R4c4RfYR/gif.gif') center/cover no-repeat;
             background-size: cover;
             background-position: center;
@@ -55,6 +108,7 @@
 
         .login-container {
             background: rgba(255, 255, 255, 0.5);
+            /* Transparentlikni 50% ga o'zgartirish */
             padding: 50px 40px;
             border-radius: 25px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
@@ -83,6 +137,7 @@
             font-size: 16px;
             background: #FAFAFA;
             color: #333;
+            /* Dark mode da ham qora rangda yozish */
             transition: all 0.3s;
         }
 
@@ -141,12 +196,16 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
+        /* Header Logo Image */
         .header-logo img {
             width: 50px;
+            /* Icon o'lchamini sozlash */
             height: 50px;
             border-radius: 50%;
+            /* Dumaloq qilish */
             margin-right: 10px;
             object-fit: cover;
+            /* Rasmning to'g'ri ko'rinishi */
         }
 
         .search-container {
@@ -484,6 +543,7 @@
             padding: 30px;
             overflow-y: auto;
             transition: background-color 0.3s, color 0.3s;
+            /* Qora rejimga moslash uchun transition */
         }
 
         .modal-header {
@@ -539,7 +599,7 @@
             }
         }
 
-        /* Content Details Styles */
+        /* Qo'shimcha stillar */
         .content-details {
             display: none;
             padding: 20px;
@@ -556,7 +616,9 @@
         .youtube-player {
             width: 100%;
             height: 300px;
+            /* Balandlikni sozlash */
             background: #000;
+            /* Player uchun fon rangi */
             margin-bottom: 15px;
         }
 
@@ -566,6 +628,7 @@
             transition: color 0.3s;
         }
 
+        /* Xabar uchun stil */
         #notification {
             position: fixed;
             top: 20px;
@@ -579,9 +642,48 @@
             display: none;
         }
 
-        /* Styles for the Telegram Post */
-        .telegram-post {
-            margin-top: 20px;
+        /* Kontent tafsilotlari uchun qo'shimcha stillar */
+        .content-details-info {
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #666;
+            text-align: center;
+            /* Yil va reytingni markazga joylash */
+            transition: color 0.2s;
+        }
+
+        .content-details-genre {
+            font-style: italic;
+            color: #999;
+            transition: color 0.2s;
+        }
+
+        /* Tugmalar uchun stil */
+        .content-buttons {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            /* Tugmalarni teng taqsimlash */
+            margin-top: 15px;
+        }
+
+        .content-buttons .like-icon {
+            margin-right: auto;
+            /* Like tugmasini chap tomonga surish */
+        }
+
+        /* Styles for "Watch" button (restore original appearance) */
+        .content-buttons button {
+            padding: 15px 20px;
+            background-color: #FF6B35;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            /* "Watch" matnini qalin qilish */
+            width: 85%;
+            /* Enini 1.5x qilish */
         }
     </style>
 </head>
@@ -727,9 +829,6 @@
                 <span class="like-icon" id="likeIcon" onclick="toggleLike()">🖤</span>
                 <button onclick="watchContent()"><strong>Watch</strong></button>
             </div>
-             <!-- Telegram Post Embed (Initially Hidden) -->
-            <div class="telegram-post" id="telegramPostEmbed" style="display: none;">
-            </div>
         </div>
     </div>
 
@@ -819,22 +918,38 @@
         const contentData = {
             multfilm: {
                 trending: [
-                    { id: 1, title: "Kpop demon hunters", year: "2025", rating: "9.2", description: "Kpop Demon Hunters haqida qiziqarli multfilm.", videoUrl: "https://youtu.be/OwpgvSo_G0g?si=MYnBD8XtwQib1hLm", genres: ["Action", "Comedy"], imageUrl: "https://i.ibb.co/cS4Bq8bn/Kpop-Demon-Hunters.jpg", telegramPostLink: "https://t.me/SunSet_Studios/6" },
-                    { id: 2, title: "Super Hero Squad", year: "2024", rating: "8.8", description: "Super qahramonlar jamoasi sarguzashtlari.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Adventure", "Family"], imageUrl: "https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png", telegramPostLink: "https://t.me/telegram/100" },
+                    {
+                        id: 1, title: "Kpop demon hunters", year: "2025", rating: "9.2", description: "Kpop Demon Hunters haqida qiziqarli multfilm.", videoUrl: "https://youtu.be/OwpgvSo_G0g?si=MYnBD8XtwQib1hLm", genres: ["Action", "Comedy"], imageUrl: "https://i.ibb.co/cS4Bq8bn/Kpop-Demon-Hunters.jpg", telegramPostLink: "https://t.me/SunSet_Studios/6"
+                    },
+                    {
+                        id: 2, title: "Super Hero Squad", year: "2024", rating: "8.8", description: "Super qahramonlar jamoasi sarguzashtlari.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Adventure", "Family"], imageUrl: "https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png", telegramPostLink: "https://t.me/telegram/100"
+                    },
                 ],
                 new: [
-                    { id: 7, title: "New Adventure", year: "2025", rating: "8.6", description: "Yangi sarguzashtlar olami.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Fantasy", "Sci-Fi"], imageUrl: "YOUR_CONTENT_IMAGE_URL", telegramPostLink: "https://t.me/telegram/200" },
-                    { id: 8, title: "Magic Quest", year: "2025", rating: "8.4", description: "Sehrli qidiruvlar.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Adventure", "Fantasy"], imageUrl: "YOUR_CONTENT_IMAGE_URL", telegramPostLink: "https://t.me/durov/2" },
+                    {
+                        id: 7, title: "New Adventure", year: "2025", rating: "8.6", description: "Yangi sarguzashtlar olami.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Fantasy", "Sci-Fi"], imageUrl: "YOUR_CONTENT_IMAGE_URL", telegramPostLink: "https://t.me/telegram/200"
+                    },
+                    {
+                        id: 8, title: "Magic Quest", year: "2025", rating: "8.4", description: "Sehrli qidiruvlar.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Adventure", "Fantasy"], imageUrl: "YOUR_CONTENT_IMAGE_URL", telegramPostLink: "https://t.me/durov/2"
+                    },
                 ]
             },
             anime: {
                 trending: [
-                    { id: 11, title: "Kpop demon hunters", year: "2025", rating: "9.2", description: "Kpop Demon Hunters haqida anime versiyasi.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Action", "Fantasy"], imageUrl: "https://i.ibb.co/cS4Bq8b/Kpop-Demon-Hunters.jpg", telegramPostLink: "https://t.me/telegram/300" },
-                    { id: 12, title: "Ninja Academy", year: "2024", rating: 9.1, description: "Ninja akademiyasi o'quvchilari.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Action", "Adventure"], imageUrl: "https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png", telegramPostLink: "https://t.me/durov/3" },
+                    {
+                        id: 11, title: "Kpop demon hunters", year: "2025", rating: "9.2", description: "Kpop Demon Hunters haqida anime versiyasi.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Action", "Fantasy"], imageUrl: "https://i.ibb.co/cS4Bq8b/Kpop-Demon-Hunters.jpg", telegramPostLink: "https://t.me/telegram/300"
+                    },
+                    {
+                        id: 12, title: "Ninja Academy", year: "2024", rating: 9.1, description: "Ninja akademiyasi o'quvchilari.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Action", "Adventure"], imageUrl: "https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png", telegramPostLink: "https://t.me/durov/3"
+                    },
                 ],
                 new: [
-                    { id: 17, title: "New Samurai", year: "2025", rating: 9.0, description: "Yangi samuray sarguzashtlari.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Action", "Drama"], imageUrl: "YOUR_CONTENT_IMAGE_URL", telegramPostLink: "https://t.me/telegram/400" },
-                    { id: 18, title: "Dragon Academy", year: "2025", rating: 8.8, description: "Ajdarho akademiyasi o'quvchilari.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Fantasy", "Adventure"], imageUrl: "YOUR_CONTENT_IMAGE_URL", telegramPostLink: "https://t.me/durov/4" },
+                    {
+                        id: 17, title: "New Samurai", year: "2025", rating: 9.0, description: "Yangi samuray sarguzashtlari.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Action", "Drama"], imageUrl: "YOUR_CONTENT_IMAGE_URL", telegramPostLink: "https://t.me/telegram/400"
+                    },
+                    {
+                        id: 18, title: "Dragon Academy", year: "2025", rating: 8.8, description: "Ajdarho akademiyasi o'quvchilari.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Fantasy", "Adventure"], imageUrl: "YOUR_CONTENT_IMAGE_URL", telegramPostLink: "https://t.me/durov/4"
+                    },
                 ]
             }
         };
@@ -1011,45 +1126,14 @@
             }
         }
 
-          // Watch content - Load Telegram Post
+        // Updated watchContent function
         function watchContent() {
             if (currentContent && currentContent.telegramPostLink) {
                 const postLink = currentContent.telegramPostLink;
-                loadTelegramPost(postLink);
+                window.open(postLink, '_blank'); // Open in a new tab
             } else {
                 alert('Telegram post havola topilmadi!');
             }
-        }
-
-        // Load Telegram post using the embed code
-        function loadTelegramPost(postLink) {
-            const embedContainer = document.getElementById('telegramPostEmbed');
-            embedContainer.innerHTML = ''; // Clear previous content
-
-            // Extract channel and post ID from the link
-            const parts = postLink.split('/');
-            const channel = parts[parts.length - 2];
-            const post = parts[parts.length - 1];
-
-            // Create the embed script
-            const script = document.createElement('script');
-            script.async = true;
-            script.src = `https://telegram.org/js/telegram-post.js?domain=sunset-studio.uz`;
-            script.setAttribute('data-telegram-post', `${channel}/${post}`);
-            script.setAttribute('data-width', '100%'); // Adjust width as needed
-
-            // Create the blockquote element
-            const blockquote = document.createElement('blockquote');
-            blockquote.className = 'telegram-post';
-            blockquote.setAttribute('data-telegram-post', `${channel}/${post}`);
-            blockquote.setAttribute('data-width', '100%'); // Adjust width as needed
-
-            // Append elements to the container
-            embedContainer.appendChild(blockquote);
-            embedContainer.appendChild(script);
-
-            // Show the container
-            embedContainer.style.display = 'block';
         }
 
         // Toggle like
@@ -1091,10 +1175,6 @@
         // Close modal
         function closeModal(modalId) {
             document.getElementById(modalId).style.display = 'none';
-            // Hide the Telegram post embed when closing the modal
-            if (modalId === 'contentDetailsModal') {
-                document.getElementById('telegramPostEmbed').style.display = 'none';
-            }
         }
 
         // Qora rejimni yoqish/o'chirish
