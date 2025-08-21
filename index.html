@@ -929,8 +929,8 @@
         // Initialize when page loads
         window.onload = function () {
             checkLogin();
-            loadAllContent();
-            loadContent();
+            // loadAllContent(); // Ushbu qatorni o'chiring
+            // loadContent(); // Ushbu qatorni o'chiring
             if (darkMode) {
                 document.body.classList.add('dark-mode');
                 document.getElementById('darkModeSwitch').checked = true;
@@ -987,6 +987,8 @@
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             element.classList.add('active');
             currentMainTab = tab;
+            contentData[currentMainTab].trending = []; // Qo'shilgan qator
+            contentData[currentMainTab].new = []; // Qo'shilgan qator
             loadContent();
         }
 
@@ -1000,6 +1002,7 @@
 
             setTimeout(() => {
                 currentSection = section;
+                contentData[currentMainTab][currentSection] = []; // Qo'shilgan qator
                 loadContent();
                 grid.classList.remove('slide-out');
             }, 200);
@@ -1294,7 +1297,7 @@
         // Toggle like
         function toggleLike() {
             if (currentContent) {
-                const index = favourites.findIndex(item => item.id === currentContent.id) !== -1;
+                const index = favourites.findIndex(item => item.id === currentContent.id);
                 if (index === -1) {
                     favourites.push(currentContent);
                     showNotification('Sevimlilarga qo\'shildi!');
