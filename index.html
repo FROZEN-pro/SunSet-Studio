@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="uz">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -29,8 +28,7 @@
         }
 
         .dark-mode .login-container {
-            background: rgba(0, 0, 0, 0.5);
-            /* Qora rejimda ham orqa fon transparent bo'lsin */
+            background: rgba(0, 0, 0, 0.5); /* Qora rejimda ham orqa fon transparent bo'lsin */
             color: #fff;
         }
 
@@ -52,20 +50,17 @@
         .dark-mode .section-nav,
         .dark-mode .content-item,
         .dark-mode .profile-menu,
-        .dark-mode .modal-content {
-            /* Modal content ham qora rejimga moslash */
+        .dark-mode .modal-content { /* Modal content ham qora rejimga moslash */
             background: #424242;
             box-shadow: 0 2px 10px rgba(255, 255, 255, 0.05);
-            color: #eee;
-            /* Matn rangini moslash */
+            color: #eee; /* Matn rangini moslash */
         }
 
         .dark-mode .nav-tab,
         .dark-mode .section-tab,
         .dark-mode .profile-menu-item,
         .dark-mode .modal-header,
-        .dark-mode .close-modal {
-            /* Modal header va close button rangini moslash */
+        .dark-mode .close-modal { /* Modal header va close button rangini moslash */
             color: #eee;
         }
 
@@ -107,8 +102,7 @@
         }
 
         .login-container {
-            background: rgba(255, 255, 255, 0.5);
-            /* Transparentlikni 50% ga o'zgartirish */
+            background: rgba(255, 255, 255, 0.5); /* Transparentlikni 50% ga o'zgartirish */
             padding: 50px 40px;
             border-radius: 25px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
@@ -136,8 +130,7 @@
             border-radius: 15px;
             font-size: 16px;
             background: #FAFAFA;
-            color: #333;
-            /* Dark mode da ham qora rangda yozish */
+            color: #333; /* Dark mode da ham qora rangda yozish */
             transition: all 0.3s;
         }
 
@@ -196,16 +189,13 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
-        /* Header Logo Image */
+         /* Header Logo Image */
         .header-logo img {
-            width: 50px;
-            /* Icon o'lchamini sozlash */
+            width: 50px; /* Icon o'lchamini sozlash */
             height: 50px;
-            border-radius: 50%;
-            /* Dumaloq qilish */
+            border-radius: 50%; /* Dumaloq qilish */
             margin-right: 10px;
-            object-fit: cover;
-            /* Rasmning to'g'ri ko'rinishi */
+            object-fit: cover; /* Rasmning to'g'ri ko'rinishi */
         }
 
         .search-container {
@@ -344,11 +334,11 @@
             box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
         }
 
-        /* Content Image */
+         /* Content Image */
         .content-image {
             width: 100%;
-            height: 0;
-            padding-bottom: 133.33%;
+            height: 0; /* Balandlikni 0 ga o'rnatish */
+            padding-bottom: 133.33%; /* 3:4 nisbat */
             position: relative;
             overflow: hidden;
         }
@@ -359,7 +349,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: cover; /* Rasmning to'g'ri ko'rinishi */
         }
 
         .content-info {
@@ -369,7 +359,7 @@
         .content-title {
             font-size: 14px;
             font-weight: 700;
-            margin-bottom: 10px;
+            margin-bottom: 10px; /* Masofani kamaytirish (40%) */
             color: #333;
             line-height: 1.4;
             height: 40px;
@@ -383,7 +373,7 @@
             align-items: center;
             font-size: 12px;
             color: #666;
-            margin-top: -15px;
+            margin-top: -15px; /* Masofani kamaytirish (40%) */
         }
 
         .content-rating {
@@ -399,12 +389,12 @@
             transform: translateX(-50%);
             width: 100%;
             max-width: 420px;
-            height: 70px;
+            height: 70px; /* Taxminiy balandlik */
             background: white;
             display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 5px 0;
+            justify-content: space-around; /* Elementlarni teng taqsimlaydi */
+            align-items: center; /* Vertikal markazlashtiradi */
+            padding: 5px 0; /* Yuqori va pastki padding kamaytirildi */
             box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
             border-radius: 25px 25px 0 0;
             transition: background-color 0.3s, color 0.3s;
@@ -413,7 +403,7 @@
         .bottom-nav-item {
             flex: 1;
             text-align: center;
-            padding: 5px;
+            padding: 5px; /* Padding ham kamaytirildi */
             background: none;
             border: none;
             cursor: pointer;
@@ -429,7 +419,7 @@
         }
 
         .bottom-nav-item .icon {
-            font-size: 22px;
+            font-size: 22px; /* Ikon o'lchamini kichraytirish mumkin */
             margin-bottom: 2px;
             display: block;
         }
@@ -463,15 +453,16 @@
         .profile-header {
             text-align: center;
             padding: 30px 0;
-            margin-top: -100px;
+            margin-top: -100px; /* Yuqori bo'sh joyni kamaytirish */
         }
 
         .profile-logo {
-            width: 150px;
+             /* Ilova Icon rasmi */
+            width: 150px; /* Icon o'lchamini sozlash */
             height: 150px;
-            border-radius: 50%;
+            border-radius: 50%; /* Dumaloq qilish */
             margin-bottom: 10px;
-            object-fit: cover;
+            object-fit: cover; /* Rasmning to'g'ri ko'rinishi */
         }
 
         .profile-name {
@@ -542,8 +533,7 @@
             border-radius: 25px;
             padding: 30px;
             overflow-y: auto;
-            transition: background-color 0.3s, color 0.3s;
-            /* Qora rejimga moslash uchun transition */
+            transition: background-color 0.3s, color 0.3s; /* Qora rejimga moslash uchun transition */
         }
 
         .modal-header {
@@ -592,13 +582,12 @@
             .content-image {
                 height: 180px;
             }
-
+            
             .modal-content {
                 width: 95%;
                 padding: 20px;
             }
         }
-
         /* Qo'shimcha stillar */
         .content-details {
             display: none;
@@ -615,10 +604,8 @@
 
         .youtube-player {
             width: 100%;
-            height: 300px;
-            /* Balandlikni sozlash */
-            background: #000;
-            /* Player uchun fon rangi */
+            height: 300px; /* Balandlikni sozlash */
+            background: #000; /* Player uchun fon rangi */
             margin-bottom: 15px;
         }
 
@@ -647,8 +634,7 @@
             margin-bottom: 10px;
             font-size: 14px;
             color: #666;
-            text-align: center;
-            /* Yil va reytingni markazga joylash */
+            text-align: center; /* Yil va reytingni markazga joylash */
             transition: color 0.2s;
         }
 
@@ -662,17 +648,14 @@
         .content-buttons {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            /* Tugmalarni teng taqsimlash */
+            justify-content: space-between; /* Tugmalarni teng taqsimlash */
             margin-top: 15px;
         }
 
         .content-buttons .like-icon {
-            margin-right: auto;
-            /* Like tugmasini chap tomonga surish */
+            margin-right: auto; /* Like tugmasini chap tomonga surish */
         }
 
-        /* Styles for "Watch" button (restore original appearance) */
         .content-buttons button {
             padding: 15px 20px;
             background-color: #FF6B35;
@@ -680,14 +663,91 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            font-weight: bold;
-            /* "Watch" matnini qalin qilish */
-            width: 85%;
-            /* Enini 1.5x qilish */
+            font-weight: bold; /* "Watch" matnini qalin qilish */
+            width: 85%; /* Enini 1.5x qilish */
         }
+
+        /* Dark mode switch stillari */
+        .dark-mode-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 10px 20px;
+            transition: color 0.3s, background-color 0.3s;
+        }
+
+        .dark-mode-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 10px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .dark-mode-switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+
+        .dark-mode-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 20px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:focus + .slider {
+            box-shadow: 0 0 1px #2196F3;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(20px);
+        }
+
+        /* Dark mode container ichidagi elementlar uchun transition */
+        .dark-mode-container *, .dark-mode-container::before, .dark-mode-container::after {
+            transition: color 0.3s, background-color 0.3s;
+        }
+
+        /* Vertikal matn uchun */
+        .vertical-text {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            white-space: nowrap;
+        }
+
     </style>
 </head>
-
 <body>
     <!-- Login Screen -->
     <div class="login-screen" id="loginScreen">
@@ -703,11 +763,10 @@
         <!-- Header - Main Page da ko'rinadi -->
         <div class="header" id="mainHeader">
             <div class="header-logo">
-                <img src="https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png" alt="Ilova Iconi">
+              <img src="https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png" alt="Ilova Iconi">
             </div>
             <div class="search-container">
-                <input type="text" class="search-input" id="searchInput" placeholder="Nima qidiramiz..."
-                    oninput="handleSearch()">
+                <input type="text" class="search-input" id="searchInput" placeholder="Nima qidiramiz..." oninput="handleSearch()">
             </div>
             <button class="announcements-btn" onclick="showModal('announcementsModal')">📢</button>
         </div>
@@ -727,7 +786,7 @@
                     <button class="section-tab active" onclick="switchSectionTab('trending', this)">Hozir Trendda</button>
                     <button class="section-tab" onclick="switchSectionTab('new', this)">Yangi Qo'shildi</button>
                 </div>
-
+                
                 <!-- Content Grid -->
                 <div class="content-grid" id="contentGrid">
                     <!-- Content will be populated by JavaScript -->
@@ -748,7 +807,7 @@
         <!-- Profile Page -->
         <div class="page-section" id="profilePage">
             <div class="profile-section">
-                <!-- Dark Mode Switch -->
+                 <!-- Dark Mode Switch -->
                 <div class="dark-mode-container">
                     <div class="dark-mode-label">
                         <div class="vertical-text">Dark</div>
@@ -761,11 +820,10 @@
                 </div>
                 <div class="profile-header">
                     <!-- Ilova Icon rasmi -->
-                    <img class="profile-logo" src="https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png"
-                        alt="Ilova Iconi">
+                    <img class="profile-logo" src="https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png" alt="Ilova Iconi">
                     <div class="profile-name" id="profileName">Foydalanuvchi</div>
                 </div>
-
+                
                 <div class="profile-menu">
                     <div class="profile-menu-item" onclick="showPage('favourites')">
                         <span class="icon">❤️</span>
@@ -813,18 +871,19 @@
         <div class="modal-content">
             <button class="close-modal" onclick="closeModal('contentDetailsModal')">×</button>
             <div class="youtube-player">
-                <iframe id="youtubeIframe" width="100%" height="300" src="" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen></iframe>
+                <!-- YouTube player content here -->
+                <iframe id="youtubeIframe" width="100%" height="300" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             <h2 id="contentDetailsTitle" style="text-align: center; margin-bottom: 10px;"></h2>
             <div class="content-details-info" id="contentDetailsInfo">
+                <!-- Yil va reyting shu yerda ko'rsatiladi -->
             </div>
             <div class="content-details-genre" id="contentDetailsGenre">
+                <!-- Janrlar shu yerda ko'rsatiladi -->
             </div>
             <h4 style="font-weight: bold;">Ta'rif</h4>
             <p id="contentDetailsDescription"></p>
-
+            
             <div class="content-buttons">
                 <span class="like-icon" id="likeIcon" onclick="toggleLike()">🖤</span>
                 <button onclick="watchContent()"><strong>Watch</strong></button>
@@ -832,74 +891,14 @@
         </div>
     </div>
 
-    <!-- Modals -->
+        <!-- Modals -->
     <div class="modal" id="announcementsModal">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closeModal('announcementsModal')">×</button>
-            <div class="modal-header">ANNOUNCEMENTS</div>
-            <div class="announcement-item">
-                <div class="announcement-title">Yangi Seriya!</div>
-                <div class="announcement-text">KPop Demon Hunters yangi seriyasi chiqdi! Rumi, Mira va Zoey ning yangi sarguzashtlarini kuzating.</div>
-            </div>
-            <div class="announcement-item">
-                <div class="announcement-title">Yangilanish</div>
-                <div class="announcement-text">Ilovamizga yangi funksiyalar qo'shildi. Endi siz sevimli kontentlaringizni saqlashingiz mumkin!</div>
-            </div>
-        </div>
     </div>
 
     <div class="modal" id="socialModal">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closeModal('socialModal')">×</button>
-            <div class="modal-header">SOCIAL PAGES</div>
-            <div class="profile-menu">
-                <div class="profile-menu-item" onclick="openTelegramChannel()">
-                    <span class="icon">📱</span>
-                    TELEGRAM KANALIMIZ
-                </div>
-                <div class="profile-menu-item" onclick="openTelegramGroup()">
-                    <span class="icon">👥</span>
-                    TELEGRAM GURUHIMIZ
-                </div>
-                <div class="profile-menu-item">
-                    <span class="icon">📺</span>
-                    YOUTUBE KANALIMIZ
-                </div>
-                <div class="profile-menu-item">
-                    <span class="icon">🎬</span>
-                    BOSHQA KONTENTIMIZ
-                </div>
-                <div class="profile-menu-item">
-                    <span class="icon">💡</span>
-                    SOCIAL MEDIA IDEAS
-                </div>
-            </div>
-        </div>
     </div>
 
     <div class="modal" id="supportModal">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closeModal('supportModal')">×</button>
-            <div class="modal-header">SUPPORT</div>
-            <div class="profile-menu">
-                <div class="profile-menu-item">
-                    <span class="icon">👨‍💼</span>
-                    ADMIN BILAN BOG'LANISH
-                </div>
-                <div class="profile-menu-item">
-                    <span class="icon">🚫</span>
-                    SPAM BO'LGANLAR UCHUN
-                </div>
-                <div class="profile-menu-item">
-                    <span class="icon">🌐</span>
-                    SHUNDAY WEB3 APP KERAK
-                </div>
-                <div class="profile-menu-item">
-                    <span class="icon">👤</span>
-                    @rapunziey
-                </div>
-            </div>
-        </div>
     </div>
 
     <!-- Notification -->
@@ -914,43 +913,68 @@
         // API kalitini shu yerga joylashtiring
         const imgbbApiKey = 'ad433e82aae872eebbb30c5bfe3fac42';
 
-        // Google App Script URL
-        const googleAppScriptUrl = "https://script.google.com/macros/s/AKfycbz0dKX2vZhWWiEL7GNg3WviMEzs1BiDcguc_nvp0jcodZx_3Wtnqfc7mu8Cnhqun8Ur/exec"; // Google App Script URL-ni shu yerga kiriting
+        // Telegram bot username (O'zgartirish kerak)
+        const telegramBotUsername = 'SunSet_Studio_bot';
 
-                // Global variables
+        // Google Apps Script URL (O'zgartirish kerak)
+        const APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzzegb-ZbYhmDYzhUYODNLoifaj_UrT1pVaLS-YK2xOEAvBt2BWLYo7rn-fxoPCXKJx/exec';
+
+        // Global variables
         let currentMainTab = 'multfilm';
         let currentSection = 'trending';
-        let allContent = [];
+        let allContent = []; // Barcha kontentlar uchun massiv
         let favourites = localStorage.getItem('favourites');
-        favourites = favourites ? JSON.parse(favourites) : [];
-        let currentContent = null;
-        let darkMode = localStorage.getItem('darkMode') === 'enabled';
+        favourites = favourites ? JSON.parse(favourites) : [];// Sevimlilar ro'yxati
+        let currentContent = null; // Hozirgi kontent
+        let darkMode = localStorage.getItem('darkMode') === 'enabled'; // Qora rejim holati
 
-        // Initialize when page loads
-        window.onload = function () {
+        // Ma'lumotlarni yuklash funksiyasi
+        function loadSheetData(action, callback) {
+            fetch(APP_SCRIPT_URL + '?action=' + action)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.error('Xatolik:', data.error);
+                        showNotification('Ma\'lumotlarni yuklashda xatolik yuz berdi!');
+                    } else {
+                        callback(data);
+                    }
+                })
+                .catch(error => {
+                    console.error('Xatolik:', error);
+                    showNotification('Server bilan bog\'lanishda xatolik yuz berdi!');
+                });
+        }
+
+        // Sahifa yuklanganda ma'lumotlarni olish
+        window.onload = function() {
             checkLogin();
-            // loadAllContent(); // Ushbu qatorni o'chiring
-            // loadContent(); // Ushbu qatorni o'chiring
+            loadAllContent();
+            loadAnnouncements();
+            loadSocialPages();
+            loadSupport();
+            loadContent();
+            showPage('main');
+
             if (darkMode) {
                 document.body.classList.add('dark-mode');
                 document.getElementById('darkModeSwitch').checked = true;
             }
 
             const darkModeSwitch = document.getElementById('darkModeSwitch');
-            darkModeSwitch.addEventListener('change', function () {
+            darkModeSwitch.addEventListener('change', function() {
                 darkMode = this.checked;
                 toggleDarkMode();
             });
 
             loadAppIcon();
-            loadData('Multfilmlar'); // Ilovani yuklashda Multfilmlar ma'lumotlarini yuklash
         };
 
         // Handle login
         function handleLogin() {
             const nameInput = document.getElementById('nameInput');
             const name = nameInput.value.trim();
-
+            
             if (name.length === 0) {
                 alert('Iltimos, ismingizni kiriting!');
                 nameInput.focus();
@@ -963,10 +987,17 @@
                 return;
             }
 
+            // Save user data
             localStorage.setItem('userName', name);
+            
+            // Update profile name
             document.getElementById('profileName').textContent = name;
+            
+            // Hide login screen and show app
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('appContainer').style.display = 'block';
+            
+            // Load initial content
             loadContent();
         }
 
@@ -984,25 +1015,26 @@
 
         // Switch main tabs
         function switchMainTab(tab, element) {
+            // Update tab appearance
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
             element.classList.add('active');
+            
             currentMainTab = tab;
-            contentData[currentMainTab].trending = []; // Qo'shilgan qator
-            contentData[currentMainTab].new = []; // Qo'shilgan qator
             loadContent();
         }
 
         // Switch section tabs
         function switchSectionTab(section, element) {
+            // Update tab appearance
             document.querySelectorAll('.section-tab').forEach(t => t.classList.remove('active'));
             element.classList.add('active');
-
+            
+            // Animate content change
             const grid = document.getElementById('contentGrid');
             grid.classList.add('slide-out');
-
+            
             setTimeout(() => {
                 currentSection = section;
-                contentData[currentMainTab][currentSection] = []; // Qo'shilgan qator
                 loadContent();
                 grid.classList.remove('slide-out');
             }, 200);
@@ -1010,10 +1042,19 @@
 
         // Show page
         function showPage(page) {
+            // Headerni ko'rsatish/yashirish
             const mainHeader = document.getElementById('mainHeader');
-            mainHeader.style.display = page === 'main' ? 'flex' : 'none';
+            if (page === 'main') {
+                mainHeader.style.display = 'flex';
+            } else {
+                mainHeader.style.display = 'none';
+            }
 
-            document.querySelectorAll('.bottom-nav-item').forEach(item => item.classList.remove('active'));
+            // Update bottom nav
+            document.querySelectorAll('.bottom-nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
             if (page === 'main') {
                 document.querySelectorAll('.bottom-nav-item')[0].classList.add('active');
             } else if (page === 'favourites') {
@@ -1022,231 +1063,68 @@
                 document.querySelectorAll('.bottom-nav-item')[2].classList.add('active');
             }
 
-            document.querySelectorAll('.page-section').forEach(section => section.classList.remove('active'));
+            // Hide all page sections
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // Show selected page
             const pageElement = document.getElementById(page + 'Page');
             if (pageElement) {
                 pageElement.classList.add('active');
             }
 
+            // Load content for specific pages
             if (page === 'favourites') {
                 loadFavourites();
             }
         }
 
+        // Load all content
+        function loadAllContent() {
+            loadSheetData('getMultfilmlar', function(multfilmlar) {
+                loadSheetData('getAnimelar', function(animelar) {
+                    allContent = multfilmlar.concat(animelar);
+                    loadContent();
+                });
+            });
+        }
+
         // Load content into grid
         function loadContent() {
             const grid = document.getElementById('contentGrid');
-            let data = contentData[currentMainTab][currentSection];
+            let contentToDisplay = [];
 
-            grid.innerHTML = data.map(item => createContentItem(item)).join('');
-        }
-
-         // Function to load data from Google App Script
-         async function loadData(sheetName) {
-            const url = `${googleAppScriptUrl}?sheet=${sheetName}`;
-
-            try {
-                const response = await fetch(url);
-                const data = await response.json();
-                console.log(`Data from ${sheetName}:`, data);
-
-                // Process data based on the sheet name
-                switch (sheetName) {
-                    case 'Multfilmlar':
-                        processMultfilmlar(data);
-                        break;
-                    case 'Animelar':
-                        processAnimelar(data);
-                        break;
-                    case 'Yangiliklar':
-                        processYangiliklar(data);
-                        break;
-                    case 'IjtimoiySahifalar':
-                        processIjtimoiySahifalar(data);
-                        break;
-                    case 'Sozlamalar':
-                        processSozlamalar(data);
-                        break;
-                    default:
-                        console.log('Noto\'g\'ri varaq nomi');
-                }
-
-            } catch (error) {
-                console.error('Ma\'lumotlarni yuklashda xatolik:', error);
-            }
-        }
-
-        // Function to process Multfilmlar data
-        function processMultfilmlar(data) {
-            // Clear existing content
-            contentData.multfilm.trending = [];
-            contentData.multfilm.new = [];
-
-            // Assuming the first row is the header
-            const headers = data[0];
-
-            // Iterate over data rows (skip the header row)
-            for (let i = 1; i < data.length; i++) {
-                const row = data[i];
-                let item = {};
-
-                // Map each column to the corresponding header
-                for (let j = 0; j < headers.length; j++) {
-                    item[headers[j]] = row[j];
-                }
-
-                // Check if the item is trending or new
-                if (item.trending === 'TRUE') {
-                    contentData.multfilm.trending.push(item);
-                } else {
-                    contentData.multfilm.new.push(item);
-                }
+            if (currentMainTab === 'multfilm') {
+                contentToDisplay = allContent.filter(item => item.Janrlar && item.Janrlar.toLowerCase().includes('multfilm'));
+            } else if (currentMainTab === 'anime') {
+                contentToDisplay = allContent.filter(item => item.Janrlar && item.Janrlar.toLowerCase().includes('anime'));
             }
 
-            // Log the processed data for verification
-            console.log('Multfilmlar processed data:', contentData.multfilm);
-
-            // Update content in the UI
-            loadContent();
-        }
-
-        // Function to process Animar data
-        function processAnimelar(data) {
-            // Clear existing content
-            contentData.anime.trending = [];
-            contentData.anime.new = [];
-
-            // Assuming the first row is the header
-            const headers = data[0];
-
-            // Iterate over data rows (skip the header row)
-            for (let i = 1; i < data.length; i++) {
-                const row = data[i];
-                let item = {};
-
-                // Map each column to the corresponding header
-                for (let j = 0; j < headers.length; j++) {
-                    item[headers[j]] = row[j];
-                }
-
-                // Check if the item is trending or new
-                if (item.trending === 'TRUE') {
-                    contentData.anime.trending.push(item);
-                } else {
-                    contentData.anime.new.push(item);
-                }
+            if (currentSection === 'trending') {
+                contentToDisplay = contentToDisplay.sort((a, b) => (a.TrenddaJoylashuvi || 999) - (b.TrenddaJoylashuvi || 999));
+            } else if (currentSection === 'new') {
+                contentToDisplay = contentToDisplay.sort((a, b) => new Date(b.Yili) - new Date(a.Yili));
             }
 
-            // Log the processed data for verification
-            console.log('Animelar processed data:', contentData.anime);
-
-            // Update content in the UI
-            loadContent();
-        }
-
-        // Function to process announcements
-        function processYangiliklar(data) {
-            const announcementsModal = document.getElementById('announcementsModal');
-            let modalContent = `
-                <div class="modal-content">
-                    <button class="close-modal" onclick="closeModal('announcementsModal')">×</button>
-                    <div class="modal-header">ANNOUNCEMENTS</div>
-            `;
-
-            // Assuming the first row is the header
-            const headers = data[0];
-
-            // Iterate over data rows (skip the header row)
-            for (let i = 1; i < data.length; i++) {
-                const row = data[i];
-                let item = {};
-
-                // Map each column to the corresponding header
-                for (let j = 0; j < headers.length; j++) {
-                    item[headers[j]] = row[j];
-                }
-
-                modalContent += `
-                    <div class="announcement-item">
-                        <div class="announcement-title">${item.title}</div>
-                        <div class="announcement-text">${item.text}</div>
-                    </div>
-                `;
-            }
-
-            modalContent += `</div>`;
-            announcementsModal.innerHTML = modalContent;
-        }
-
-        // Function to process social pages
-        function processIjtimoiySahifalar(data) {
-            const socialModal = document.getElementById('socialModal');
-            let modalContent = `
-                <div class="modal-content">
-                    <button class="close-modal" onclick="closeModal('socialModal')">×</button>
-                    <div class="modal-header">SOCIAL PAGES</div>
-                    <div class="profile-menu">
-            `;
-
-            // Assuming the first row is the header
-            const headers = data[0];
-
-            // Iterate over data rows (skip the header row)
-            for (let i = 1; i < data.length; i++) {
-                const row = data[i];
-                let item = {};
-
-                // Map each column to the corresponding header
-                for (let j = 0; j < headers.length; j++) {
-                    item[headers[j]] = row[j];
-                }
-
-                modalContent += `
-                    <div class="profile-menu-item" onclick="window.open('${item.link}', '_blank')">
-                        <span class="icon">🌐</span>
-                        ${item.title}
-                    </div>
-                `;
-            }
-
-            modalContent += `
-                    </div>
-                </div>
-            `;
-            socialModal.innerHTML = modalContent;
-        }
-
-        // Function to process settings
-        function processSozlamalar(data) {
-            // Assuming the first row is the header
-            const headers = data[0];
-            let settings = {};
-
-            // Iterate over data rows (skip the header row)
-            for (let i = 1; i < data.length; i++) {
-                const row = data[i];
-                settings[row[0]] = row[1]; // Assuming key-value pair
-            }
-
-            // Update the title of the app
-            document.title = settings.appName || 'SunSet Studio';
+            grid.innerHTML = contentToDisplay.map(item => createContentItem(item)).join('');
         }
 
         // Create content item HTML
         function createContentItem(item) {
-            const isLiked = favourites.findIndex(favItem => favItem.id === item.id) !== -1;
+            const isLiked = favourites.findIndex(favItem => favItem.id === item.ID) !== -1;
             const likeIcon = isLiked ? '❤️' : '🖤';
 
             return `
-                <div class="content-item" onclick="showContentDetails(${item.id})">
+                <div class="content-item" onclick="showContentDetails(${item.ID})">
                     <div class="content-image">
-                     <img src="${item.imageUrl}" alt="${item.title}">
+                        <img src="${item.RasmURL}" alt="${item.Nomi}">
                     </div>
                     <div class="content-info">
-                        <div class="content-title">${item.title}</div>
+                        <div class="content-title">${item.Nomi}</div>
                         <div class="content-meta">
-                            <span>${item.year}</span>
-                            <span class="content-rating">⭐ ${item.rating}</span>
+                            <span>${item.Yili}</span>
+                            <span class="content-rating">⭐ ${item.Reytingi}</span>
                         </div>
                     </div>
                 </div>
@@ -1255,17 +1133,16 @@
 
         // Show content details
         function showContentDetails(contentId) {
-            currentContent = allContent.find(item => item.id === contentId);
+            currentContent = allContent.find(item => item.ID === contentId);
 
             if (currentContent) {
-                document.getElementById('contentDetailsTitle').textContent = currentContent.title;
-                document.getElementById('contentDetailsInfo').textContent = `${currentContent.year} | ⭐ ${currentContent.rating}`;
-                document.getElementById('contentDetailsGenre').textContent = `Janrlar: ${currentContent.genres.join(', ')}`;
-                document.getElementById('contentDetailsDescription').textContent = currentContent.description;
+                document.getElementById('contentDetailsTitle').textContent = currentContent.Nomi;
+                document.getElementById('contentDetailsInfo').textContent = `${currentContent.Yili} | ⭐ ${currentContent.Reytingi}`;
+                document.getElementById('contentDetailsGenre').textContent = `Janrlar: ${currentContent.Janrlar}`;
+                document.getElementById('contentDetailsDescription').textContent = currentContent.Tavsifi;
 
-                const videoUrl = currentContent.videoUrl;
+                const videoUrl = currentContent.VideoURL;
                 const youtubeIframe = document.getElementById('youtubeIframe');
-                youtubeIframe.src = ""; // Clear existing iframe source
 
                 if (videoUrl && videoUrl.includes("youtube.com/embed/")) {
                     youtubeIframe.src = videoUrl;
@@ -1276,6 +1153,7 @@
                     const videoId = videoUrl.split("youtu.be/")[1].split("?")[0];
                     youtubeIframe.src = `https://www.youtube.com/embed/${videoId}`;
                 } else {
+                    youtubeIframe.src = "";
                     console.error("Noto'g'ri YouTube havola:", videoUrl);
                 }
 
@@ -1284,20 +1162,10 @@
             }
         }
 
-        // Updated watchContent function
-        function watchContent() {
-            if (currentContent && currentContent.telegramPostLink) {
-                const postLink = currentContent.telegramPostLink;
-                window.open(postLink, '_blank'); // Open in a new tab
-            } else {
-                alert('Telegram post havola topilmadi!');
-            }
-        }
-
         // Toggle like
         function toggleLike() {
             if (currentContent) {
-                const index = favourites.findIndex(item => item.id === currentContent.id);
+                const index = favourites.findIndex(item => item.ID === currentContent.ID);
                 if (index === -1) {
                     favourites.push(currentContent);
                     showNotification('Sevimlilarga qo\'shildi!');
@@ -1315,14 +1183,82 @@
         // Like iconni yangilash
         function updateLikeIcon() {
             const likeIconElement = document.getElementById('likeIcon');
-            const isLiked = favourites.findIndex(item => item.id === currentContent.id) !== -1;
+            const isLiked = favourites.findIndex(item => item.ID === currentContent.ID) !== -1;
             likeIconElement.textContent = isLiked ? '❤️' : '🖤';
+        }
+
+        // Watch content
+        function watchContent() {
+            const message = `Men hozir ${currentContent.Nomi} nomli kontentni ko'rmoqchiman!`;
+            const telegramLink = `https://t.me/${SunSetStudioBot}?start=${encodeURIComponent(message)}`;
+            window.open(telegramLink, '_blank');
         }
 
         // Load favourites
         function loadFavourites() {
             const favouritesGrid = document.getElementById('favouritesGrid');
             favouritesGrid.innerHTML = favourites.map(item => createContentItem(item)).join('');
+        }
+
+        // Load announcements
+        function loadAnnouncements() {
+            loadSheetData('getAnnouncements', function(announcements) {
+                const announcementsModal = document.getElementById('announcementsModal');
+                announcementsModal.innerHTML = `
+                    <div class="modal-content">
+                        <button class="close-modal" onclick="closeModal('announcementsModal')">×</button>
+                        <div class="modal-header">E'LONLAR</div>
+                        ${announcements.map(announcement => `
+                            <div class="announcement-item">
+                                <div class="announcement-title">${announcement.Sarlavha}</div>
+                                <div class="announcement-text">${announcement.Matn}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            });
+        }
+
+        // Load social pages
+        function loadSocialPages() {
+            loadSheetData('getSocialPages', function(socialPages) {
+                const socialModal = document.getElementById('socialModal');
+                socialModal.innerHTML = `
+                    <div class="modal-content">
+                        <button class="close-modal" onclick="closeModal('socialModal')">×</button>
+                        <div class="modal-header">IJTIMOIY SAHIFALAR</div>
+                        <div class="profile-menu">
+                            ${socialPages.map(page => `
+                                <div class="profile-menu-item" onclick="window.open('${page.Havola}', '_blank')">
+                                    <span class="icon">🌐</span>
+                                    ${page.Nomi}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        // Load support items
+        function loadSupport() {
+            loadSheetData('getSupport', function(supportItems) {
+                const supportModal = document.getElementById('supportModal');
+                supportModal.innerHTML = `
+                    <div class="modal-content">
+                        <button class="close-modal" onclick="closeModal('supportModal')">×</button>
+                        <div class="modal-header">QO'LLAB-QUVVATLASH</div>
+                        <div class="profile-menu">
+                            ${supportItems.map(item => `
+                                <div class="profile-menu-item" onclick="window.open('${item.Havola}', '_blank')">
+                                    <span class="icon">🛠️</span>
+                                    ${item.Nomi}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
         }
 
         // Show modal
@@ -1335,13 +1271,13 @@
             document.getElementById(modalId).style.display = 'none';
         }
 
-        // Qora rejimni yoqish/o'chirish
+        // Toggle dark mode
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
             localStorage.setItem('darkMode', darkMode ? 'enabled' : 'disabled');
         }
 
-        // Ilovani yuklash
+        // Load app icon
         function loadAppIcon() {
             const iconUrl = localStorage.getItem('appIcon');
             if (iconUrl) {
@@ -1351,10 +1287,10 @@
             }
         }
 
-        // Default iconni yuklash
+        // Upload default icon
         function uploadDefaultIcon() {
-            const defaultIconUrl = 'https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png'; // Default icon manzili
-            uploadImageToImgbb(image)
+            const defaultIconUrl = 'https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png';
+            uploadImageToImgbb(defaultIconUrl)
                 .then(response => {
                     if (response.success) {
                         const uploadedIconUrl = response.data.url;
@@ -1366,7 +1302,7 @@
                 });
         }
 
-        // Rasmni ImgBB ga yuklash
+        // Upload image to ImgBB
         function uploadImageToImgbb(image) {
             const formData = new FormData();
             formData.append('image', image);
@@ -1376,14 +1312,14 @@
                 method: 'POST',
                 body: formData
             })
-                .then(response => response.json())
-                .catch(error => {
-                    console.error('Rasmni yuklashda xatolik:', error);
-                    return { success: false, error: error };
-                });
+            .then(response => response.json())
+            .catch(error => {
+                console.error('Rasmni yuklashda xatolik:', error);
+                return { success: false, error: error };
+            });
         }
 
-        // Ilovani iconni o'rnatish
+        // Set app icon
         function setAppIcon(iconUrl) {
             const headerLogoImg = document.querySelector('.header-logo img');
             const profileLogoImg = document.querySelector('.profile-header .profile-logo');
@@ -1403,10 +1339,10 @@
         }
 
         // Handle Enter key in login input
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const nameInput = document.getElementById('nameInput');
             if (nameInput) {
-                nameInput.addEventListener('keypress', function (e) {
+                nameInput.addEventListener('keypress', function(e) {
                     if (e.key === 'Enter') {
                         handleLogin();
                     }
@@ -1415,25 +1351,16 @@
         });
 
         // Close modals when clicking outside
-        window.onclick = function (event) {
+        window.onclick = function(event) {
             if (event.target.classList.contains('modal')) {
                 event.target.style.display = 'none';
-            }
-        }
-
-        // Barcha kontentlarni yuklash
-        function loadAllContent() {
-            for (let tab in contentData) {
-                for (let section in contentData[tab]) {
-                    allContent = allContent.concat(contentData[tab][section]);
-                }
             }
         }
 
         // Qidiruvni amalga oshirish
         function handleSearch() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const filteredContent = allContent.filter(item => item.title.toLowerCase().includes(searchTerm));
+            const filteredContent = allContent.filter(item => item.Nomi.toLowerCase().includes(searchTerm));
             displaySearchResults(filteredContent);
         }
 
@@ -1449,22 +1376,10 @@
             notification.textContent = message;
             notification.style.display = 'block';
 
-            // 3 sekunddan keyin xabarni yashirish
             setTimeout(() => {
                 notification.style.display = 'none';
             }, 3000);
         }
-
-        // Telegram channelni ochish
-        function openTelegramChannel() {
-            window.open('https://t.me/SunSet_Studio_Channel', '_blank');
-        }
-
-        // Telegram gruppani ochish
-        function openTelegramGroup() {
-            window.open('https://t.me/SunSet_Studio_Group', '_blank');
-        }
     </script>
 </body>
-
 </html>
