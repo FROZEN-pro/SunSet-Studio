@@ -914,47 +914,10 @@
         // API kalitini shu yerga joylashtiring
         const imgbbApiKey = 'ad433e82aae872eebbb30c5bfe3fac42';
 
-        // Sample data - Add telegramPostLink
-        const contentData = {
-            multfilm: {
-                trending: [
-                    {
-                        id: 1, title: "Kpop demon hunters", year: "2025", rating: "9.2", description: "Kpop Demon Hunters haqida qiziqarli multfilm.", videoUrl: "https://youtu.be/OwpgvSo_G0g?si=MYnBD8XtwQib1hLm", genres: ["Action", "Comedy"], imageUrl: "https://i.ibb.co/cS4Bq8bn/Kpop-Demon-Hunters.jpg", telegramPostLink: "https://t.me/SunSet_Studios/6"
-                    },
-                    {
-                        id: 2, title: "Super Hero Squad", year: "2024", rating: "8.8", description: "Super qahramonlar jamoasi sarguzashtlari.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Adventure", "Family"], imageUrl: "https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png", telegramPostLink: "https://t.me/telegram/100"
-                    },
-                ],
-                new: [
-                    {
-                        id: 7, title: "New Adventure", year: "2025", rating: "8.6", description: "Yangi sarguzashtlar olami.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Fantasy", "Sci-Fi"], imageUrl: "YOUR_CONTENT_IMAGE_URL", telegramPostLink: "https://t.me/telegram/200"
-                    },
-                    {
-                        id: 8, title: "Magic Quest", year: "2025", rating: "8.4", description: "Sehrli qidiruvlar.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Adventure", "Fantasy"], imageUrl: "YOUR_CONTENT_IMAGE_URL", telegramPostLink: "https://t.me/durov/2"
-                    },
-                ]
-            },
-            anime: {
-                trending: [
-                    {
-                        id: 11, title: "Kpop demon hunters", year: "2025", rating: "9.2", description: "Kpop Demon Hunters haqida anime versiyasi.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Action", "Fantasy"], imageUrl: "https://i.ibb.co/cS4Bq8b/Kpop-Demon-Hunters.jpg", telegramPostLink: "https://t.me/telegram/300"
-                    },
-                    {
-                        id: 12, title: "Ninja Academy", year: "2024", rating: 9.1, description: "Ninja akademiyasi o'quvchilari.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Action", "Adventure"], imageUrl: "https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png", telegramPostLink: "https://t.me/durov/3"
-                    },
-                ],
-                new: [
-                    {
-                        id: 17, title: "New Samurai", year: "2025", rating: 9.0, description: "Yangi samuray sarguzashtlari.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Action", "Drama"], imageUrl: "YOUR_CONTENT_IMAGE_URL", telegramPostLink: "https://t.me/telegram/400"
-                    },
-                    {
-                        id: 18, title: "Dragon Academy", year: "2025", rating: 8.8, description: "Ajdarho akademiyasi o'quvchilari.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Fantasy", "Adventure"], imageUrl: "YOUR_CONTENT_IMAGE_URL", telegramPostLink: "https://t.me/durov/4"
-                    },
-                ]
-            }
-        };
+        // Google App Script URL
+        const googleAppScriptUrl = "https://script.google.com/macros/s/AKfycbz0dKX2vZhWWiEL7GNg3WviMEzs1BiDcguc_nvp0jcodZx_3Wtnqfc7mu8Cnhqun8Ur/exec"; // Google App Script URL-ni shu yerga kiriting
 
-        // Global variables
+                // Global variables
         let currentMainTab = 'multfilm';
         let currentSection = 'trending';
         let allContent = [];
@@ -980,6 +943,7 @@
             });
 
             loadAppIcon();
+            loadData('Multfilmlar'); // Ilovani yuklashda Multfilmlar ma'lumotlarini yuklash
         };
 
         // Handle login
@@ -1074,6 +1038,197 @@
             grid.innerHTML = data.map(item => createContentItem(item)).join('');
         }
 
+         // Function to load data from Google App Script
+         async function loadData(sheetName) {
+            const url = `${googleAppScriptUrl}?sheet=${sheetName}`;
+
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                console.log(`Data from ${sheetName}:`, data);
+
+                // Process data based on the sheet name
+                switch (sheetName) {
+                    case 'Multfilmlar':
+                        processMultfilmlar(data);
+                        break;
+                    case 'Animelar':
+                        processAnimelar(data);
+                        break;
+                    case 'Yangiliklar':
+                        processYangiliklar(data);
+                        break;
+                    case 'IjtimoiySahifalar':
+                        processIjtimoiySahifalar(data);
+                        break;
+                    case 'Sozlamalar':
+                        processSozlamalar(data);
+                        break;
+                    default:
+                        console.log('Noto\'g\'ri varaq nomi');
+                }
+
+            } catch (error) {
+                console.error('Ma\'lumotlarni yuklashda xatolik:', error);
+            }
+        }
+
+        // Function to process Multfilmlar data
+        function processMultfilmlar(data) {
+            // Clear existing content
+            contentData.multfilm.trending = [];
+            contentData.multfilm.new = [];
+
+            // Assuming the first row is the header
+            const headers = data[0];
+
+            // Iterate over data rows (skip the header row)
+            for (let i = 1; i < data.length; i++) {
+                const row = data[i];
+                let item = {};
+
+                // Map each column to the corresponding header
+                for (let j = 0; j < headers.length; j++) {
+                    item[headers[j]] = row[j];
+                }
+
+                // Check if the item is trending or new
+                if (item.trending === 'TRUE') {
+                    contentData.multfilm.trending.push(item);
+                } else {
+                    contentData.multfilm.new.push(item);
+                }
+            }
+
+            // Log the processed data for verification
+            console.log('Multfilmlar processed data:', contentData.multfilm);
+
+            // Update content in the UI
+            loadContent();
+        }
+
+        // Function to process Animar data
+        function processAnimelar(data) {
+            // Clear existing content
+            contentData.anime.trending = [];
+            contentData.anime.new = [];
+
+            // Assuming the first row is the header
+            const headers = data[0];
+
+            // Iterate over data rows (skip the header row)
+            for (let i = 1; i < data.length; i++) {
+                const row = data[i];
+                let item = {};
+
+                // Map each column to the corresponding header
+                for (let j = 0; j < headers.length; j++) {
+                    item[headers[j]] = row[j];
+                }
+
+                // Check if the item is trending or new
+                if (item.trending === 'TRUE') {
+                    contentData.anime.trending.push(item);
+                } else {
+                    contentData.anime.new.push(item);
+                }
+            }
+
+            // Log the processed data for verification
+            console.log('Animelar processed data:', contentData.anime);
+
+            // Update content in the UI
+            loadContent();
+        }
+
+        // Function to process announcements
+        function processYangiliklar(data) {
+            const announcementsModal = document.getElementById('announcementsModal');
+            let modalContent = `
+                <div class="modal-content">
+                    <button class="close-modal" onclick="closeModal('announcementsModal')">×</button>
+                    <div class="modal-header">ANNOUNCEMENTS</div>
+            `;
+
+            // Assuming the first row is the header
+            const headers = data[0];
+
+            // Iterate over data rows (skip the header row)
+            for (let i = 1; i < data.length; i++) {
+                const row = data[i];
+                let item = {};
+
+                // Map each column to the corresponding header
+                for (let j = 0; j < headers.length; j++) {
+                    item[headers[j]] = row[j];
+                }
+
+                modalContent += `
+                    <div class="announcement-item">
+                        <div class="announcement-title">${item.title}</div>
+                        <div class="announcement-text">${item.text}</div>
+                    </div>
+                `;
+            }
+
+            modalContent += `</div>`;
+            announcementsModal.innerHTML = modalContent;
+        }
+
+        // Function to process social pages
+        function processIjtimoiySahifalar(data) {
+            const socialModal = document.getElementById('socialModal');
+            let modalContent = `
+                <div class="modal-content">
+                    <button class="close-modal" onclick="closeModal('socialModal')">×</button>
+                    <div class="modal-header">SOCIAL PAGES</div>
+                    <div class="profile-menu">
+            `;
+
+            // Assuming the first row is the header
+            const headers = data[0];
+
+            // Iterate over data rows (skip the header row)
+            for (let i = 1; i < data.length; i++) {
+                const row = data[i];
+                let item = {};
+
+                // Map each column to the corresponding header
+                for (let j = 0; j < headers.length; j++) {
+                    item[headers[j]] = row[j];
+                }
+
+                modalContent += `
+                    <div class="profile-menu-item" onclick="window.open('${item.link}', '_blank')">
+                        <span class="icon">🌐</span>
+                        ${item.title}
+                    </div>
+                `;
+            }
+
+            modalContent += `
+                    </div>
+                </div>
+            `;
+            socialModal.innerHTML = modalContent;
+        }
+
+        // Function to process settings
+        function processSozlamalar(data) {
+            // Assuming the first row is the header
+            const headers = data[0];
+            let settings = {};
+
+            // Iterate over data rows (skip the header row)
+            for (let i = 1; i < data.length; i++) {
+                const row = data[i];
+                settings[row[0]] = row[1]; // Assuming key-value pair
+            }
+
+            // Update the title of the app
+            document.title = settings.appName || 'SunSet Studio';
+        }
+
         // Create content item HTML
         function createContentItem(item) {
             const isLiked = favourites.findIndex(favItem => favItem.id === item.id) !== -1;
@@ -1139,7 +1294,7 @@
         // Toggle like
         function toggleLike() {
             if (currentContent) {
-                const index = favourites.findIndex(item => item.id === currentContent.id);
+                const index = favourites.findIndex(item => item.id === currentContent.id) !== -1;
                 if (index === -1) {
                     favourites.push(currentContent);
                     showNotification('Sevimlilarga qo\'shildi!');
@@ -1196,7 +1351,7 @@
         // Default iconni yuklash
         function uploadDefaultIcon() {
             const defaultIconUrl = 'https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png'; // Default icon manzili
-            uploadImageToImgbb(defaultIconUrl)
+            uploadImageToImgbb(image)
                 .then(response => {
                     if (response.success) {
                         const uploadedIconUrl = response.data.url;
