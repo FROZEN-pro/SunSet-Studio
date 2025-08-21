@@ -337,7 +337,7 @@
          /* Content Image */
         .content-image {
             width: 100%;
-            height: 0; /* Balandlikni 0 ga o'rnatish */
+            height: 0; /* Balandlikni sozlash */
             padding-bottom: 133.33%; /* 3:4 nisbat */
             position: relative;
             overflow: hidden;
@@ -914,7 +914,7 @@
         const imgbbApiKey = 'ad433e82aae872eebbb30c5bfe3fac42';
 
         // Telegram bot username (O'zgartirish kerak)
-        const telegramBotUsername = 'SunSet_Studio_bot';
+        const telegramBotUsername = 'SunSetStudioBot';
 
         // Google Apps Script URL (O'zgartirish kerak)
         const APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzzegb-ZbYhmDYzhUYODNLoifaj_UrT1pVaLS-YK2xOEAvBt2BWLYo7rn-fxoPCXKJx/exec';
@@ -953,7 +953,6 @@
             loadAnnouncements();
             loadSocialPages();
             loadSupport();
-            loadContent();
             showPage('main');
 
             if (darkMode) {
@@ -998,7 +997,7 @@
             document.getElementById('appContainer').style.display = 'block';
             
             // Load initial content
-            loadContent();
+            loadAllContent();
         }
 
         // Check if user is already logged in
@@ -1009,7 +1008,7 @@
                 document.getElementById('loginScreen').style.display = 'none';
                 document.getElementById('appContainer').style.display = 'block';
                 showPage('main');
-                loadContent();
+                loadAllContent();
             }
         }
 
@@ -1020,7 +1019,7 @@
             element.classList.add('active');
             
             currentMainTab = tab;
-            loadContent();
+            loadAllContent();
         }
 
         // Switch section tabs
@@ -1035,7 +1034,7 @@
             
             setTimeout(() => {
                 currentSection = section;
-                loadContent();
+                loadAllContent();
                 grid.classList.remove('slide-out');
             }, 200);
         }
@@ -1085,14 +1084,13 @@
             loadSheetData('getMultfilmlar', function(multfilmlar) {
                 loadSheetData('getAnimelar', function(animelar) {
                     allContent = multfilmlar.concat(animelar);
-                    loadContent();
+                    displayContent(); // Ma'lumotlar yuklangandan keyin ko'rsatish
                 });
             });
         }
 
-        // Load content into grid
-        function loadContent() {
-            const grid = document.getElementById('contentGrid');
+        // Display content into grid
+        function displayContent() {
             let contentToDisplay = [];
 
             if (currentMainTab === 'multfilm') {
@@ -1107,18 +1105,24 @@
                 contentToDisplay = contentToDisplay.sort((a, b) => new Date(b.Yili) - new Date(a.Yili));
             }
 
+            const grid = document.getElementById('contentGrid');
             grid.innerHTML = contentToDisplay.map(item => createContentItem(item)).join('');
         }
 
         // Create content item HTML
         function createContentItem(item) {
+            if (!item) {
+                console.error('Noto\'g\'ri element berildi!');
+                return '';
+            }
+
             const isLiked = favourites.findIndex(favItem => favItem.id === item.ID) !== -1;
             const likeIcon = isLiked ? '❤️' : '🖤';
 
             return `
                 <div class="content-item" onclick="showContentDetails(${item.ID})">
                     <div class="content-image">
-                        <img src="${item.RasmURL}" alt="${item.Nomi}">
+                        <img src="${item.RasmURL || 'https://via.placeholder.com/150'}" alt="${item.Nomi}">
                     </div>
                     <div class="content-info">
                         <div class="content-title">${item.Nomi}</div>
@@ -1190,14 +1194,24 @@
         // Watch content
         function watchContent() {
             const message = `Men hozir ${currentContent.Nomi} nomli kontentni ko'rmoqchiman!`;
-            const telegramLink = `https://t.me/${SunSetStudioBot}?start=${encodeURIComponent(message)}`;
+            const telegramLink = `https://t.me/${telegramBotUsername}?start=${encodeURIComponent(message)}`;
             window.open(telegramLink, '_blank');
         }
 
         // Load favourites
         function loadFavourites() {
             const favouritesGrid = document.getElementById('favouritesGrid');
-            favouritesGrid.innerHTML = favourites.map(item => createContentItem(item)).join('');
+            let favouritesContent = [];
+
+            // Filter content from allContent based on IDs in favourites
+            favourites.forEach(fav => {
+                const item = allContent.find(item => item.ID === fav.ID);
+                if (item) {
+                    favouritesContent.push(item);
+                }
+            });
+          
+            favouritesGrid.innerHTML = favouritesContent.map(item => createContentItem(item)).join('');
         }
 
         // Load announcements
@@ -1350,18 +1364,11 @@
             }
         });
 
-        // Close modals when clicking outside
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.style.display = 'none';
-            }
-        }
-
         // Qidiruvni amalga oshirish
         function handleSearch() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const filteredContent = allContent.filter(item => item.Nomi.toLowerCase().includes(searchTerm));
-            displaySearchResults(filteredContent);
+            const filteredContent = allContent.filter(item => item.Nomi && item.Nomi.toLowerCase().includes(searchTerm));
+            displayContent(filteredContent);
         }
 
         // Qidiruv natijalarini ko'rsatish
@@ -1379,6 +1386,31 @@
             setTimeout(() => {
                 notification.style.display = 'none';
             }, 3000);
+        }
+
+        // Barcha contentlarni qayta yuklash (qidiruv natijalari bilan)
+        function displayContent(searchResults = null) {
+            let contentToDisplay = [];
+
+            if (currentMainTab === 'multfilm') {
+                contentToDisplay = allContent.filter(item => item.Janrlar && item.Janrlar.toLowerCase().includes('multfilm'));
+            } else if (currentMainTab === 'anime') {
+                contentToDisplay = allContent.filter(item => item.Janrlar && item.Janrlar.toLowerCase().includes('anime'));
+            }
+
+            if (currentSection === 'trending') {
+                contentToDisplay = contentToDisplay.sort((a, b) => (a.TrenddaJoylashuvi || 999) - (b.TrenddaJoylashuvi || 999));
+            } else if (currentSection === 'new') {
+                contentToDisplay = contentToDisplay.sort((a, b) => new Date(b.Yili) - new Date(a.Yili));
+            }
+
+            // Qidiruv natijalari bo'lsa, ularni ishlatamiz
+            if (searchResults) {
+                contentToDisplay = searchResults;
+            }
+
+            const grid = document.getElementById('contentGrid');
+            grid.innerHTML = contentToDisplay.map(item => createContentItem(item)).join('');
         }
     </script>
 </body>
