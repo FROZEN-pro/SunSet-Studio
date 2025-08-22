@@ -459,7 +459,7 @@
         .profile-logo {
              /* Ilova Icon rasmi */
             width: 150px; /* Icon o'lchamini sozlash */
-            height: 150px;
+            height: 150px; /* Qisqartirildi */
             border-radius: 50%; /* Dumaloq qilish */
             margin-bottom: 10px;
             object-fit: cover; /* Rasmning to'g'ri ko'rinishi */
@@ -891,7 +891,7 @@
         </div>
     </div>
 
-    <!-- Modals -->
+        <!-- Modals -->
     <div class="modal" id="announcementsModal">
     </div>
 
@@ -901,7 +901,7 @@
     <div class="modal" id="supportModal">
     </div>
 
-        <!-- Notification -->
+    <!-- Notification -->
     <div id="notification"></div>
 
     <script>
@@ -1054,6 +1054,7 @@
             
             currentMainTab = tab;
             loadAllContent();
+            displayContent();
         }
 
         // Switch section tabs
@@ -1069,6 +1070,7 @@
             setTimeout(() => {
                 currentSection = section;
                 loadAllContent();
+                 displayContent();
                 grid.classList.remove('slide-out');
             }, 200);
         }
@@ -1423,3 +1425,5 @@
             }, 3000);
         }
     </script>
+</body>
+</html>
