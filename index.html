@@ -891,7 +891,7 @@
         </div>
     </div>
 
-        <!-- Modals -->
+    <!-- Modals -->
     <div class="modal" id="announcementsModal">
     </div>
 
@@ -901,7 +901,7 @@
     <div class="modal" id="supportModal">
     </div>
 
-    <!-- Notification -->
+        <!-- Notification -->
     <div id="notification"></div>
 
     <script>
@@ -917,7 +917,31 @@
         const telegramBotUsername = 'SunSet_Studio_bot';
 
         // Google Apps Script URL (O'zgartirish kerak)
-        const APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzzegb-ZbYhmDYzhUYODNLoifaj_UrT1pVaLS-YK2xOEAvBt2BWLYo7rn-fxoPCXKJx/exec';
+        const APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbytBwLnGFQrjNL1OtSU-j-eSbsxFcDbbEy9AX94XrMm7PUHIFmxB0pEsQwVXqxmuQrD/exec';
+
+        // Sample data
+        const contentData = {
+            multfilm: {
+                trending: [
+                    { id: 1, title: "Kpop demon hunters", year: "2025", rating: "9.2", description: "Kpop Demon Hunters haqida qiziqarli multfilm.", videoUrl: "https://youtu.be/OwpgvSo_G0g?si=MYnBD8XtwQib1hLm", genres: ["Action", "Comedy"], imageUrl: "https://i.ibb.co/cS4Bq8bn/Kpop-Demon-Hunters.jpg" },
+                    { id: 2, title: "Super Hero Squad", year: "2024", rating: "8.8", description: "Super qahramonlar jamoasi sarguzashtlari.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Adventure", "Family"], imageUrl: "https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png" },
+                ],
+                new: [
+                    { id: 7, title: "New Adventure", year: "2025", rating: "8.6", description: "Yangi sarguzashtlar olami.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Fantasy", "Sci-Fi"], imageUrl: "YOUR_CONTENT_IMAGE_URL" },
+                    { id: 8, title: "Magic Quest", year: "2025", rating: "8.4", description: "Sehrli qidiruvlar.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Adventure", "Fantasy"], imageUrl: "YOUR_CONTENT_IMAGE_URL" },
+                ]
+            },
+            anime: {
+                trending: [
+                    { id: 11, title: "Kpop demon hunters", year: "2025", rating: "9.2", description: "Kpop Demon Hunters haqida anime versiyasi.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Action", "Fantasy"], imageUrl: "https://i.ibb.co/cS4Bq8b/Kpop-Demon-Hunters.jpg" },
+                    { id: 12, title: "Ninja Academy", year: "2024", rating: 9.1, description: "Ninja akademiyasi o'quvchilari.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Action", "Adventure"], imageUrl: "https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png" },
+                ],
+                new: [
+                    { id: 17, title: "New Samurai", year: "2025", rating: 9.0, description: "Yangi samuray sarguzashtlari.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Action", "Drama"], imageUrl: "YOUR_CONTENT_IMAGE_URL" },
+                    { id: 18, title: "Dragon Academy", year: "2025", rating: 8.8, description: "Ajdarho akademiyasi o'quvchilari.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Fantasy", "Adventure"], imageUrl: "YOUR_CONTENT_IMAGE_URL" },
+                ]
+            }
+        };
 
         // Global variables
         let currentMainTab = 'multfilm';
@@ -930,20 +954,30 @@
 
         // Ma'lumotlarni yuklash funksiyasi
         function loadSheetData(action, callback) {
-            fetch(APP_SCRIPT_URL + '?action=' + action)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        console.error('Xatolik:', data.error);
-                        showNotification('Ma\'lumotlarni yuklashda xatolik yuz berdi!');
-                    } else {
-                        callback(data);
-                    }
-                })
-                .catch(error => {
-                    console.error('Xatolik:', error);
-                    showNotification('Server bilan bog\'lanishda xatolik yuz berdi!');
-                });
+            try {
+                fetch(APP_SCRIPT_URL + '?action=' + action)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP xatolik! Status: ${response.status}`);
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data.error) {
+                            console.error('Xatolik:', data.error);
+                            showNotification('Ma\'lumotlarni yuklashda xatolik yuz berdi!');
+                        } else {
+                            callback(data);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Xatolik:', error);
+                        showNotification('Server bilan bog\'lanishda xatolik yuz berdi!');
+                    });
+            } catch (error) {
+                console.error('Fetch xatoligi:', error);
+                showNotification('Fetch xatoligi yuz berdi!');
+            }
         }
 
         // Sahifa yuklanganda ma'lumotlarni olish
@@ -1079,14 +1113,15 @@
             }
         }
 
-        // Load all content
+        // Barcha kontentlarni yuklash
         function loadAllContent() {
-            loadSheetData('getMultfilmlar', function(multfilmlar) {
-                loadSheetData('getAnimelar', function(animelar) {
-                    allContent = multfilmlar.concat(animelar);
-                    displayContent(); // Ma'lumotlar yuklangandan keyin ko'rsatish
-                });
-            });
+            allContent = [];
+            for (let tab in contentData) {
+                for (let section in contentData[tab]) {
+                    allContent = allContent.concat(contentData[tab][section]);
+                }
+            }
+            displayContent();
         }
 
         // Display content into grid
@@ -1094,15 +1129,15 @@
             let contentToDisplay = [];
 
             if (currentMainTab === 'multfilm') {
-                contentToDisplay = allContent.filter(item => item.Janrlar && item.Janrlar.toLowerCase().includes('multfilm'));
+                contentToDisplay = allContent.filter(item => item.genres && item.genres.join('').toLowerCase().includes('multfilm'));
             } else if (currentMainTab === 'anime') {
-                contentToDisplay = allContent.filter(item => item.Janrlar && item.Janrlar.toLowerCase().includes('anime'));
+                contentToDisplay = allContent.filter(item => item.genres && item.genres.join('').toLowerCase().includes('anime'));
             }
 
             if (currentSection === 'trending') {
-                contentToDisplay = contentToDisplay.sort((a, b) => (a.TrenddaJoylashuvi || 999) - (b.TrenddaJoylashuvi || 999));
+                contentToDisplay = contentToDisplay.sort((a, b) => (a.rating || 0) - (b.rating || 0));
             } else if (currentSection === 'new') {
-                contentToDisplay = contentToDisplay.sort((a, b) => new Date(b.Yili) - new Date(a.Yili));
+                contentToDisplay = contentToDisplay.sort((a, b) => new Date(b.year) - new Date(a.year));
             }
 
             const grid = document.getElementById('contentGrid');
@@ -1116,19 +1151,19 @@
                 return '';
             }
 
-            const isLiked = favourites.findIndex(favItem => favItem.id === item.ID) !== -1;
+            const isLiked = favourites.findIndex(favItem => favItem.id === item.id) !== -1;
             const likeIcon = isLiked ? '❤️' : '🖤';
 
             return `
-                <div class="content-item" onclick="showContentDetails(${item.ID})">
+                <div class="content-item" onclick="showContentDetails(${item.id})">
                     <div class="content-image">
-                        <img src="${item.RasmURL || 'https://via.placeholder.com/150'}" alt="${item.Nomi}">
+                        <img src="${item.imageUrl || 'https://via.placeholder.com/150'}" alt="${item.title}">
                     </div>
                     <div class="content-info">
-                        <div class="content-title">${item.Nomi}</div>
+                        <div class="content-title">${item.title}</div>
                         <div class="content-meta">
-                            <span>${item.Yili}</span>
-                            <span class="content-rating">⭐ ${item.Reytingi}</span>
+                            <span>${item.year}</span>
+                            <span class="content-rating">⭐ ${item.rating}</span>
                         </div>
                     </div>
                 </div>
@@ -1137,15 +1172,15 @@
 
         // Show content details
         function showContentDetails(contentId) {
-            currentContent = allContent.find(item => item.ID === contentId);
+            currentContent = allContent.find(item => item.id === contentId);
 
             if (currentContent) {
-                document.getElementById('contentDetailsTitle').textContent = currentContent.Nomi;
-                document.getElementById('contentDetailsInfo').textContent = `${currentContent.Yili} | ⭐ ${currentContent.Reytingi}`;
-                document.getElementById('contentDetailsGenre').textContent = `Janrlar: ${currentContent.Janrlar}`;
-                document.getElementById('contentDetailsDescription').textContent = currentContent.Tavsifi;
+                document.getElementById('contentDetailsTitle').textContent = currentContent.title;
+                document.getElementById('contentDetailsInfo').textContent = `${currentContent.year} | ⭐ ${currentContent.rating}`;
+                document.getElementById('contentDetailsGenre').textContent = `Janrlar: ${currentContent.genres.join(', ')}`;
+                document.getElementById('contentDetailsDescription').textContent = currentContent.description;
 
-                const videoUrl = currentContent.VideoURL;
+                const videoUrl = currentContent.videoUrl;
                 const youtubeIframe = document.getElementById('youtubeIframe');
 
                 if (videoUrl && videoUrl.includes("youtube.com/embed/")) {
@@ -1169,7 +1204,7 @@
         // Toggle like
         function toggleLike() {
             if (currentContent) {
-                const index = favourites.findIndex(item => item.ID === currentContent.ID);
+                const index = favourites.findIndex(item => item.id === currentContent.id);
                 if (index === -1) {
                     favourites.push(currentContent);
                     showNotification('Sevimlilarga qo\'shildi!');
@@ -1187,13 +1222,13 @@
         // Like iconni yangilash
         function updateLikeIcon() {
             const likeIconElement = document.getElementById('likeIcon');
-            const isLiked = favourites.findIndex(item => item.ID === currentContent.ID) !== -1;
+            const isLiked = favourites.findIndex(item => item.id === currentContent.id) !== -1;
             likeIconElement.textContent = isLiked ? '❤️' : '🖤';
         }
 
         // Watch content
         function watchContent() {
-            const message = `Men hozir ${currentContent.Nomi} nomli kontentni ko'rmoqchiman!`;
+            const message = `Men hozir ${currentContent.title} nomli kontentni ko'rmoqchiman!`;
             const telegramLink = `https://t.me/${telegramBotUsername}?start=${encodeURIComponent(message)}`;
             window.open(telegramLink, '_blank');
         }
@@ -1205,7 +1240,7 @@
 
             // Filter content from allContent based on IDs in favourites
             favourites.forEach(fav => {
-                const item = allContent.find(item => item.ID === fav.ID);
+                const item = allContent.find(item => item.id === fav.id);
                 if (item) {
                     favouritesContent.push(item);
                 }
@@ -1367,8 +1402,8 @@
         // Qidiruvni amalga oshirish
         function handleSearch() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const filteredContent = allContent.filter(item => item.Nomi && item.Nomi.toLowerCase().includes(searchTerm));
-            displayContent(filteredContent);
+            const filteredContent = allContent.filter(item => item.title && item.title.toLowerCase().includes(searchTerm));
+            displaySearchResults(filteredContent);
         }
 
         // Qidiruv natijalarini ko'rsatish
@@ -1387,31 +1422,4 @@
                 notification.style.display = 'none';
             }, 3000);
         }
-
-        // Barcha contentlarni qayta yuklash (qidiruv natijalari bilan)
-        function displayContent(searchResults = null) {
-            let contentToDisplay = [];
-
-            if (currentMainTab === 'multfilm') {
-                contentToDisplay = allContent.filter(item => item.Janrlar && item.Janrlar.toLowerCase().includes('multfilm'));
-            } else if (currentMainTab === 'anime') {
-                contentToDisplay = allContent.filter(item => item.Janrlar && item.Janrlar.toLowerCase().includes('anime'));
-            }
-
-            if (currentSection === 'trending') {
-                contentToDisplay = contentToDisplay.sort((a, b) => (a.TrenddaJoylashuvi || 999) - (b.TrenddaJoylashuvi || 999));
-            } else if (currentSection === 'new') {
-                contentToDisplay = contentToDisplay.sort((a, b) => new Date(b.Yili) - new Date(a.Yili));
-            }
-
-            // Qidiruv natijalari bo'lsa, ularni ishlatamiz
-            if (searchResults) {
-                contentToDisplay = searchResults;
-            }
-
-            const grid = document.getElementById('contentGrid');
-            grid.innerHTML = contentToDisplay.map(item => createContentItem(item)).join('');
-        }
     </script>
-</body>
-</html>
