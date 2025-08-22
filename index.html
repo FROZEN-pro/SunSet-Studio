@@ -891,14 +891,74 @@
         </div>
     </div>
 
-    <!-- Modals -->
+            <!-- Modals -->
     <div class="modal" id="announcementsModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('announcementsModal')">×</button>
+            <div class="modal-header">ANNOUNCEMENTS</div>
+            <div class="announcement-item">
+                <div class="announcement-title">Yangi Seriya!</div>
+                <div class="announcement-text">KPop Demon Hunters yangi seriyasi chiqdi! Rumi, Mira va Zoey ning yangi sarguzashtlarini kuzating.</div>
+            </div>
+                        <div class="announcement-item">
+                <div class="announcement-title">Yangilanish</div>
+                <div class="announcement-text">Ilovamizga yangi funksiyalar qo'shildi. Endi siz sevimli kontentlaringizni saqlashingiz mumkin!</div>
+            </div>
+        </div>
     </div>
 
     <div class="modal" id="socialModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('socialModal')">×</button>
+            <div class="modal-header">SOCIAL PAGES</div>
+            <div class="profile-menu">
+                <div class="profile-menu-item" onclick="openTelegramChannel()">
+                    <span class="icon">📱</span>
+                    TELEGRAM KANALIMIZ
+                </div>
+                <div class="profile-menu-item" onclick="openTelegramGroup()">
+                    <span class="icon">👥</span>
+                    TELEGRAM GURUHIMIZ
+                </div>
+                <div class="profile-menu-item">
+                    <span class="icon">📺</span>
+                    YOUTUBE KANALIMIZ
+                </div>
+                <div class="profile-menu-item">
+                    <span class="icon">🎬</span>
+                    BOSHQA KONTENTIMIZ
+                </div>
+                <div class="profile-menu-item">
+                    <span class="icon">💡</span>
+                    SOCIAL MEDIA IDEAS
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="modal" id="supportModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeModal('supportModal')">×</button>
+            <div class="modal-header">SUPPORT</div>
+            <div class="profile-menu">
+                <div class="profile-menu-item">
+                    <span class="icon">👨‍💼</span>
+                    ADMIN BILAN BOG'LANISH
+                </div>
+                <div class="profile-menu-item">
+                    <span class="icon">🚫</span>
+                    SPAM BO'LGANLAR UCHUN
+                </div>
+                <div class="profile-menu-item">
+                    <span class="icon">🌐</span>
+                    SHUNDAY WEB3 APP KERAK
+                </div>
+                <div class="profile-menu-item">
+                    <span class="icon">👤</span>
+                    @rapunziey
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Notification -->
@@ -912,12 +972,6 @@
 
         // API kalitini shu yerga joylashtiring
         const imgbbApiKey = 'ad433e82aae872eebbb30c5bfe3fac42';
-
-        // Telegram bot username (O'zgartirish kerak)
-        const telegramBotUsername = 'SunSet_Studio_bot';
-
-        // Google Apps Script URL (O'zgartirish kerak)
-        const APP_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbytBwLnGFQrjNL1OtSU-j-eSbsxFcDbbEy9AX94XrMm7PUHIFmxB0pEsQwVXqxmuQrD/exec';
 
         // Sample data
         const contentData = {
@@ -952,54 +1006,29 @@
         let currentContent = null; // Hozirgi kontent
         let darkMode = localStorage.getItem('darkMode') === 'enabled'; // Qora rejim holati
 
-        // Ma'lumotlarni yuklash funksiyasi
-        function loadSheetData(action, callback) {
-            try {
-                fetch(APP_SCRIPT_URL + '?action=' + action)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`HTTP xatolik! Status: ${response.status}`);
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (data.error) {
-                            console.error('Xatolik:', data.error);
-                            showNotification('Ma\'lumotlarni yuklashda xatolik yuz berdi!');
-                        } else {
-                            callback(data);
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Xatolik:', error);
-                        showNotification('Server bilan bog\'lanishda xatolik yuz berdi!');
-                    });
-            } catch (error) {
-                console.error('Fetch xatoligi:', error);
-                showNotification('Fetch xatoligi yuz berdi!');
-            }
-        }
-
-        // Sahifa yuklanganda ma'lumotlarni olish
+        // Initialize when page loads
         window.onload = function() {
             checkLogin();
             loadAllContent();
-            loadAnnouncements();
-            loadSocialPages();
-            loadSupport();
+            loadContent(); // Boshlang'ich kontentni yuklash
+
+            // Boshlang'ich holat: main sahifa
             showPage('main');
 
+            // Qora rejimni tekshirish va o'rnatish
             if (darkMode) {
                 document.body.classList.add('dark-mode');
                 document.getElementById('darkModeSwitch').checked = true;
             }
 
+             // Dark mode switch listener
             const darkModeSwitch = document.getElementById('darkModeSwitch');
             darkModeSwitch.addEventListener('change', function() {
-                darkMode = this.checked;
-                toggleDarkMode();
+            darkMode = this.checked;
+            toggleDarkMode();
             });
 
+             // Icon yuklash
             loadAppIcon();
         };
 
@@ -1031,7 +1060,7 @@
             document.getElementById('appContainer').style.display = 'block';
             
             // Load initial content
-            loadAllContent();
+            loadContent();
         }
 
         // Check if user is already logged in
@@ -1042,7 +1071,7 @@
                 document.getElementById('loginScreen').style.display = 'none';
                 document.getElementById('appContainer').style.display = 'block';
                 showPage('main');
-                loadAllContent();
+                loadContent();
             }
         }
 
@@ -1053,8 +1082,7 @@
             element.classList.add('active');
             
             currentMainTab = tab;
-            loadAllContent();
-            displayContent();
+            loadContent();
         }
 
         // Switch section tabs
@@ -1069,8 +1097,7 @@
             
             setTimeout(() => {
                 currentSection = section;
-                loadAllContent();
-                 displayContent();
+                loadContent();
                 grid.classList.remove('slide-out');
             }, 200);
         }
@@ -1115,51 +1142,23 @@
             }
         }
 
-        // Barcha kontentlarni yuklash
-        function loadAllContent() {
-            allContent = [];
-            for (let tab in contentData) {
-                for (let section in contentData[tab]) {
-                    allContent = allContent.concat(contentData[tab][section]);
-                }
-            }
-            displayContent();
-        }
-
-        // Display content into grid
-        function displayContent() {
-            let contentToDisplay = [];
-
-            if (currentMainTab === 'multfilm') {
-                contentToDisplay = allContent.filter(item => item.genres && item.genres.join('').toLowerCase().includes('multfilm'));
-            } else if (currentMainTab === 'anime') {
-                contentToDisplay = allContent.filter(item => item.genres && item.genres.join('').toLowerCase().includes('anime'));
-            }
-
-            if (currentSection === 'trending') {
-                contentToDisplay = contentToDisplay.sort((a, b) => (a.rating || 0) - (b.rating || 0));
-            } else if (currentSection === 'new') {
-                contentToDisplay = contentToDisplay.sort((a, b) => new Date(b.year) - new Date(a.year));
-            }
-
+        // Load content into grid
+        function loadContent() {
             const grid = document.getElementById('contentGrid');
-            grid.innerHTML = contentToDisplay.map(item => createContentItem(item)).join('');
+            let data = contentData[currentMainTab][currentSection];
+
+            grid.innerHTML = data.map(item => createContentItem(item)).join('');
         }
 
         // Create content item HTML
         function createContentItem(item) {
-            if (!item) {
-                console.error('Noto\'g\'ri element berildi!');
-                return '';
-            }
-
             const isLiked = favourites.findIndex(favItem => favItem.id === item.id) !== -1;
             const likeIcon = isLiked ? '❤️' : '🖤';
 
             return `
                 <div class="content-item" onclick="showContentDetails(${item.id})">
                     <div class="content-image">
-                        <img src="${item.imageUrl || 'https://via.placeholder.com/150'}" alt="${item.title}">
+                     <img src="${item.imageUrl}" alt="${item.title}">
                     </div>
                     <div class="content-info">
                         <div class="content-title">${item.title}</div>
@@ -1178,27 +1177,40 @@
 
             if (currentContent) {
                 document.getElementById('contentDetailsTitle').textContent = currentContent.title;
+
+                // Yil va reyting ma'lumotlarini joylash
                 document.getElementById('contentDetailsInfo').textContent = `${currentContent.year} | ⭐ ${currentContent.rating}`;
+
+                // Janrlarni joylash
                 document.getElementById('contentDetailsGenre').textContent = `Janrlar: ${currentContent.genres.join(', ')}`;
+
+                // Ta'rifni joylash
                 document.getElementById('contentDetailsDescription').textContent = currentContent.description;
 
+                // YouTube player manzilini yangilash
                 const videoUrl = currentContent.videoUrl;
                 const youtubeIframe = document.getElementById('youtubeIframe');
 
+                // YouTube havolasini to'g'ri formatlash
                 if (videoUrl && videoUrl.includes("youtube.com/embed/")) {
                     youtubeIframe.src = videoUrl;
                 } else if (videoUrl && videoUrl.includes("youtube.com")) {
+                    // Agar havola "youtube.com" bo'lsa, "embed" formatiga o'tkazish
                     const videoId = videoUrl.split("v=")[1];
                     youtubeIframe.src = `https://www.youtube.com/embed/${videoId}`;
                 } else if (videoUrl && videoUrl.includes("youtu.be")) {
+                    // Agar havola "youtu.be" bo'lsa, video ID olish
                     const videoId = videoUrl.split("youtu.be/")[1].split("?")[0];
                     youtubeIframe.src = `https://www.youtube.com/embed/${videoId}`;
                 } else {
+                    // Agar havola noto'g'ri bo'lsa, xabar berish
                     youtubeIframe.src = "";
                     console.error("Noto'g'ri YouTube havola:", videoUrl);
                 }
 
+                // Like iconni yangilash
                 updateLikeIcon();
+
                 showModal('contentDetailsModal');
             }
         }
@@ -1208,15 +1220,22 @@
             if (currentContent) {
                 const index = favourites.findIndex(item => item.id === currentContent.id);
                 if (index === -1) {
+                    // Qo'shish
                     favourites.push(currentContent);
                     showNotification('Sevimlilarga qo\'shildi!');
                 } else {
+                    // O'chirish
                     favourites.splice(index, 1);
                     showNotification('Sevimlilardan olib tashlandi!');
                 }
 
+                // LocalStorage yangilash
                 localStorage.setItem('favourites', JSON.stringify(favourites));
+
+                // Like iconni yangilash
                 updateLikeIcon();
+
+                // Sevimlilar sahifasini yangilash
                 loadFavourites();
             }
         }
@@ -1230,86 +1249,14 @@
 
         // Watch content
         function watchContent() {
-            const message = `Men hozir ${currentContent.title} nomli kontentni ko'rmoqchiman!`;
-            const telegramLink = `https://t.me/${telegramBotUsername}?start=${encodeURIComponent(message)}`;
-            window.open(telegramLink, '_blank');
+            // Keyinroq funksiyani qo'shamiz
+            alert('Watch funksiyasi keyinroq qo\'shiladi!');
         }
 
         // Load favourites
         function loadFavourites() {
             const favouritesGrid = document.getElementById('favouritesGrid');
-            let favouritesContent = [];
-
-            // Filter content from allContent based on IDs in favourites
-            favourites.forEach(fav => {
-                const item = allContent.find(item => item.id === fav.id);
-                if (item) {
-                    favouritesContent.push(item);
-                }
-            });
-          
-            favouritesGrid.innerHTML = favouritesContent.map(item => createContentItem(item)).join('');
-        }
-
-        // Load announcements
-        function loadAnnouncements() {
-            loadSheetData('getAnnouncements', function(announcements) {
-                const announcementsModal = document.getElementById('announcementsModal');
-                announcementsModal.innerHTML = `
-                    <div class="modal-content">
-                        <button class="close-modal" onclick="closeModal('announcementsModal')">×</button>
-                        <div class="modal-header">E'LONLAR</div>
-                        ${announcements.map(announcement => `
-                            <div class="announcement-item">
-                                <div class="announcement-title">${announcement.Sarlavha}</div>
-                                <div class="announcement-text">${announcement.Matn}</div>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-            });
-        }
-
-        // Load social pages
-        function loadSocialPages() {
-            loadSheetData('getSocialPages', function(socialPages) {
-                const socialModal = document.getElementById('socialModal');
-                socialModal.innerHTML = `
-                    <div class="modal-content">
-                        <button class="close-modal" onclick="closeModal('socialModal')">×</button>
-                        <div class="modal-header">IJTIMOIY SAHIFALAR</div>
-                        <div class="profile-menu">
-                            ${socialPages.map(page => `
-                                <div class="profile-menu-item" onclick="window.open('${page.Havola}', '_blank')">
-                                    <span class="icon">🌐</span>
-                                    ${page.Nomi}
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        // Load support items
-        function loadSupport() {
-            loadSheetData('getSupport', function(supportItems) {
-                const supportModal = document.getElementById('supportModal');
-                supportModal.innerHTML = `
-                    <div class="modal-content">
-                        <button class="close-modal" onclick="closeModal('supportModal')">×</button>
-                        <div class="modal-header">QO'LLAB-QUVVATLASH</div>
-                        <div class="profile-menu">
-                            ${supportItems.map(item => `
-                                <div class="profile-menu-item" onclick="window.open('${item.Havola}', '_blank')">
-                                    <span class="icon">🛠️</span>
-                                    ${item.Nomi}
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-            });
+            favouritesGrid.innerHTML = favourites.map(item => createContentItem(item)).join('');
         }
 
         // Show modal
@@ -1322,25 +1269,26 @@
             document.getElementById(modalId).style.display = 'none';
         }
 
-        // Toggle dark mode
+          // Qora rejimni yoqish/o'chirish
         function toggleDarkMode() {
             document.body.classList.toggle('dark-mode');
             localStorage.setItem('darkMode', darkMode ? 'enabled' : 'disabled');
         }
 
-        // Load app icon
+        // Ilovani yuklash
         function loadAppIcon() {
             const iconUrl = localStorage.getItem('appIcon');
             if (iconUrl) {
                 setAppIcon(iconUrl);
             } else {
+                // Agar icon saqlanmagan bo'lsa, default iconni yuklash
                 uploadDefaultIcon();
             }
         }
 
-        // Upload default icon
+       // Default iconni yuklash
         function uploadDefaultIcon() {
-            const defaultIconUrl = 'https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png';
+            const defaultIconUrl = 'https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png'; // Default icon manzili
             uploadImageToImgbb(defaultIconUrl)
                 .then(response => {
                     if (response.success) {
@@ -1353,7 +1301,7 @@
                 });
         }
 
-        // Upload image to ImgBB
+        // Rasmni ImgBB ga yuklash
         function uploadImageToImgbb(image) {
             const formData = new FormData();
             formData.append('image', image);
@@ -1370,7 +1318,7 @@
             });
         }
 
-        // Set app icon
+         // Ilovani iconni o'rnatish
         function setAppIcon(iconUrl) {
             const headerLogoImg = document.querySelector('.header-logo img');
             const profileLogoImg = document.querySelector('.profile-header .profile-logo');
@@ -1401,28 +1349,21 @@
             }
         });
 
-        // Qidiruvni amalga oshirish
-        function handleSearch() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const filteredContent = allContent.filter(item => item.title && item.title.toLowerCase().includes(searchTerm));
-            displaySearchResults(filteredContent);
+        // Close modals when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+        
+        // Telegram channelni ochish
+        function openTelegramChannel() {
+            window.open('https://t.me/SunSet_Studio_Channel', '_blank');
         }
 
-        // Qidiruv natijalarini ko'rsatish
-        function displaySearchResults(results) {
-            const grid = document.getElementById('contentGrid');
-            grid.innerHTML = results.map(item => createContentItem(item)).join('');
-        }
-
-        // Xabarni ko'rsatish
-        function showNotification(message) {
-            const notification = document.getElementById('notification');
-            notification.textContent = message;
-            notification.style.display = 'block';
-
-            setTimeout(() => {
-                notification.style.display = 'none';
-            }, 3000);
+        // Telegram gruppani ochish
+        function openTelegramGroup() {
+            window.open('https://t.me/SunSet_Studio_Group', '_blank');
         }
     </script>
 </body>
