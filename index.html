@@ -337,7 +337,7 @@
          /* Content Image */
         .content-image {
             width: 100%;
-            height: 0; /* Balandlikni sozlash */
+            height: 0; /* Balandlikni 0 ga o'rnatish */
             padding-bottom: 133.33%; /* 3:4 nisbat */
             position: relative;
             overflow: hidden;
@@ -459,7 +459,7 @@
         .profile-logo {
              /* Ilova Icon rasmi */
             width: 150px; /* Icon o'lchamini sozlash */
-            height: 150px; /* Qisqartirildi */
+            height: 150px;
             border-radius: 50%; /* Dumaloq qilish */
             margin-bottom: 10px;
             object-fit: cover; /* Rasmning to'g'ri ko'rinishi */
@@ -508,7 +508,7 @@
             width: 25px;
         }
 
-        /* Modals */
+                /* Modals */
         .modal {
             display: none;
             position: fixed;
@@ -607,6 +607,19 @@
             height: 300px; /* Balandlikni sozlash */
             background: #000; /* Player uchun fon rangi */
             margin-bottom: 15px;
+            position: relative; /* Bu needed for the error message styling */
+        }
+        
+        /* Kichikroq ekranlarda iframe'ning balandligini sozlash */
+        @media (max-width: 768px) {
+            .youtube-player {
+                height: 250px; /* Kichikroq ekranlar uchun balandlikni kamaytirish */
+            }
+        }
+         @media (max-width: 480px) {
+            .youtube-player {
+                height: 200px; /* Eng kichik ekranlar uchun balandlikni yanada kamaytirish */
+            }
         }
 
         .like-icon {
@@ -615,7 +628,7 @@
             transition: color 0.3s;
         }
 
-        /* Xabar uchun stil */
+                /* Xabar uchun stil */
         #notification {
             position: fixed;
             top: 20px;
@@ -627,6 +640,8 @@
             border-radius: 5px;
             z-index: 1001;
             display: none;
+            font-size: 14px; /* Xabar matni o'lchamini sozlash */
+            text-align: center; /* Matnni markazlashtirish */
         }
 
         /* Kontent tafsilotlari uchun qo'shimcha stillar */
@@ -665,6 +680,12 @@
             cursor: pointer;
             font-weight: bold; /* "Watch" matnini qalin qilish */
             width: 85%; /* Enini 1.5x qilish */
+            transition: background-color 0.3s, transform 0.3s; /* Tugma uchun ham transition */
+        }
+        
+        .content-buttons button:hover {
+            background-color: #e05a2d; /* Hover holatida rangni o'zgartirish */
+            transform: translateY(-2px); /* Engil ko'tarish */
         }
 
         /* Dark mode switch stillari */
@@ -866,7 +887,7 @@
         </div>
     </div>
 
-        <!-- Content Details Modal -->
+    <!-- Content Details Modal -->
     <div class="modal" id="contentDetailsModal">
         <div class="modal-content">
             <button class="close-modal" onclick="closeModal('contentDetailsModal')">×</button>
@@ -977,22 +998,22 @@
         const contentData = {
             multfilm: {
                 trending: [
-                    { id: 1, title: "Kpop demon hunters", year: "2025", rating: "9.2", description: "Kpop Demon Hunters haqida qiziqarli multfilm.", videoUrl: "https://youtu.be/OwpgvSo_G0g?si=MYnBD8XtwQib1hLm", genres: ["Action", "Comedy"], imageUrl: "https://i.ibb.co/cS4Bq8bn/Kpop-Demon-Hunters.jpg" },
-                    { id: 2, title: "Super Hero Squad", year: "2024", rating: "8.8", description: "Super qahramonlar jamoasi sarguzashtlari.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Adventure", "Family"], imageUrl: "https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png" },
+                    { id: 1, title: "Kpop demon hunters", year: "2025", rating: "9.2", description: "Kpop Demon Hunters haqida qiziqarli multfilm.", videoUrl: "https://youtu.be/yebNIHKAC4A?si=Ru9w0LyZRmLi7yKd", watchLink: "https://youtu.be/OwpgvSo_G0g", genres: ["Action", "Comedy"], imageUrl: "https://i.ibb.co/cS4Bq8bn/Kpop-Demon-Hunters.jpg" },
+                    { id: 2, title: "Super Hero Squad", year: "2024", rating: "8.8", description: "Super qahramonlar jamoasi sarguzashtlari.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", watchLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", genres: ["Adventure", "Family"], imageUrl: "https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png" },
                 ],
                 new: [
-                    { id: 7, title: "New Adventure", year: "2025", rating: "8.6", description: "Yangi sarguzashtlar olami.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Fantasy", "Sci-Fi"], imageUrl: "YOUR_CONTENT_IMAGE_URL" },
-                    { id: 8, title: "Magic Quest", year: "2025", rating: "8.4", description: "Sehrli qidiruvlar.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Adventure", "Fantasy"], imageUrl: "YOUR_CONTENT_IMAGE_URL" },
+                    { id: 7, title: "New Adventure", year: "2025", rating: "8.6", description: "Yangi sarguzashtlar olami.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", watchLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", genres: ["Fantasy", "Sci-Fi"], imageUrl: "https://i.ibb.co/6J74gM2/new-adventure.jpg" },
+                    { id: 8, title: "Magic Quest", year: "2025", rating: "8.4", description: "Sehrli qidiruvlar.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", watchLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", genres: ["Adventure", "Fantasy"], imageUrl: "https://i.ibb.co/kGY4QYc/magic-quest.jpg" },
                 ]
             },
             anime: {
                 trending: [
-                    { id: 11, title: "Kpop demon hunters", year: "2025", rating: "9.2", description: "Kpop Demon Hunters haqida anime versiyasi.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Action", "Fantasy"], imageUrl: "https://i.ibb.co/cS4Bq8b/Kpop-Demon-Hunters.jpg" },
-                    { id: 12, title: "Ninja Academy", year: "2024", rating: 9.1, description: "Ninja akademiyasi o'quvchilari.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Action", "Adventure"], imageUrl: "https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png" },
+                    { id: 11, title: "Kpop demon hunters", year: "2025", rating: "9.2", description: "Kpop Demon Hunters haqida anime versiyasi.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", watchLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", genres: ["Action", "Fantasy"], imageUrl: "https://i.ibb.co/cS4Bq8bn/Kpop-Demon-Hunters.jpg" },
+                    { id: 12, title: "Ninja Academy", year: "2024", rating: "9.1", description: "Ninja akademiyasi o'quvchilari.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", watchLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", genres: ["Action", "Adventure"], imageUrl: "https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png" },
                 ],
                 new: [
-                    { id: 17, title: "New Samurai", year: "2025", rating: 9.0, description: "Yangi samuray sarguzashtlari.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Action", "Drama"], imageUrl: "YOUR_CONTENT_IMAGE_URL" },
-                    { id: 18, title: "Dragon Academy", year: "2025", rating: 8.8, description: "Ajdarho akademiyasi o'quvchilari.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", genres: ["Fantasy", "Adventure"], imageUrl: "YOUR_CONTENT_IMAGE_URL" },
+                    { id: 17, title: "New Samurai", year: "2025", rating: "9.0", description: "Yangi samuray sarguzashtlari.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", watchLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", genres: ["Action", "Drama"], imageUrl: "https://i.ibb.co/zXp8g1G/new-samurai.jpg" },
+                    { id: 18, title: "Dragon Academy", year: "2025", rating: "8.8", description: "Ajdarho akademiyasi o'quvchilari.", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ", watchLink: "https://www.youtube.com/watch?v=dQw4w9WgXcQ", genres: ["Fantasy", "Adventure"], imageUrl: "https://i.ibb.co/5c1f0tV/dragon-academy.jpg" },
                 ]
             }
         };
@@ -1145,6 +1166,11 @@
         // Load content into grid
         function loadContent() {
             const grid = document.getElementById('contentGrid');
+            // Ensure data exists before accessing
+            if (!contentData[currentMainTab] || !contentData[currentMainTab][currentSection]) {
+                grid.innerHTML = '<p style="text-align: center; padding: 20px;">Kontent topilmadi.</p>';
+                return;
+            }
             let data = contentData[currentMainTab][currentSection];
 
             grid.innerHTML = data.map(item => createContentItem(item)).join('');
@@ -1152,6 +1178,12 @@
 
         // Create content item HTML
         function createContentItem(item) {
+            // Ensure item and its properties are defined
+            if (!item || !item.id || !item.title || !item.year || !item.rating || !item.imageUrl) {
+                console.warn("Skipping incomplete item:", item);
+                return ''; // Return empty string for incomplete items
+            }
+
             const isLiked = favourites.findIndex(favItem => favItem.id === item.id) !== -1;
             const likeIcon = isLiked ? '❤️' : '🖤';
 
@@ -1173,6 +1205,7 @@
 
         // Show content details
         function showContentDetails(contentId) {
+            // Find content from allContent to ensure all properties are available
             currentContent = allContent.find(item => item.id === contentId);
 
             if (currentContent) {
@@ -1190,34 +1223,62 @@
                 // YouTube player manzilini yangilash
                 const videoUrl = currentContent.videoUrl;
                 const youtubeIframe = document.getElementById('youtubeIframe');
+                const youtubePlayerDiv = document.querySelector('.youtube-player'); // Get the parent div
 
                 // YouTube havolasini to'g'ri formatlash
-                if (videoUrl && videoUrl.includes("youtube.com/embed/")) {
-                    youtubeIframe.src = videoUrl;
-                } else if (videoUrl && videoUrl.includes("youtube.com")) {
-                    // Agar havola "youtube.com" bo'lsa, "embed" formatiga o'tkazish
-                    const videoId = videoUrl.split("v=")[1];
-                    youtubeIframe.src = `https://www.youtube.com/embed/${videoId}`;
-                } else if (videoUrl && videoUrl.includes("youtu.be")) {
-                    // Agar havola "youtu.be" bo'lsa, video ID olish
-                    const videoId = videoUrl.split("youtu.be/")[1].split("?")[0];
-                    youtubeIframe.src = `https://www.youtube.com/embed/${videoId}`;
+                let embedUrl = '';
+                if (videoUrl) {
+                    if (videoUrl.includes("youtube.com/embed/")) {
+                        embedUrl = videoUrl;
+                    } else if (videoUrl.includes("youtube.com/watch?v=")) {
+                        // Extract video ID from watch URL
+                        const videoIdMatch = videoUrl.match(/v=([a-zA-Z0-9_-]+)/);
+                        if (videoIdMatch && videoIdMatch[1]) {
+                            embedUrl = `https://www.youtube.com/embed/${videoIdMatch[1]}`;
+                        }
+                    } else if (videoUrl.includes("youtu.be/")) {
+                        // Extract video ID from youtu.be URL
+                        const videoIdMatch = videoUrl.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
+                        if (videoIdMatch && videoIdMatch[1]) {
+                            embedUrl = `https://www.youtube.com/embed/${videoIdMatch[1]}`;
+                        }
+                    }
+                }
+
+                if (embedUrl) {
+                    youtubeIframe.src = embedUrl;
+                    youtubeIframe.style.display = 'block'; // Player ko'rinishi
+                    if (youtubePlayerDiv) {
+                        youtubePlayerDiv.style.background = 'none'; // Error fonini olib tashlash
+                    }
                 } else {
-                    // Agar havola noto'g'ri bo'lsa, xabar berish
-                    youtubeIframe.src = "";
-                    console.error("Noto'g'ri YouTube havola:", videoUrl);
+                    youtubeIframe.src = ""; // URL bo'lmasa, iframe'ni bo'shatish
+                    youtubeIframe.style.display = 'none'; // Playerni yashirish
+                    if (youtubePlayerDiv) {
+                        youtubePlayerDiv.style.background = '#000'; // Qora fonni saqlab turish
+                    }
+                    console.error("Noto'g'ri yoki mavjud bo'lmagan YouTube havola:", videoUrl);
                 }
 
                 // Like iconni yangilash
                 updateLikeIcon();
 
                 showModal('contentDetailsModal');
+            } else {
+                console.error("Content details not found for ID:", contentId);
+                showNotification("Kontent ma'lumotlari topilmadi.");
             }
         }
 
-        // Toggle like
+                // Toggle like
         function toggleLike() {
             if (currentContent) {
+                // Kontentning asosiy ma'lumotlari mavjudligini tekshirish
+                if (!currentContent.id || !currentContent.title || !currentContent.year || !currentContent.rating || !currentContent.imageUrl) {
+                    showNotification('Bu kontentni sevimlilarga qo\'shish mumkin emas (ma\'lumotlar to\'liq emas).');
+                    return; // Agar ma'lumotlar to'liq bo'lmasa, funksiyadan chiqib ketadi.
+                }
+
                 const index = favourites.findIndex(item => item.id === currentContent.id);
                 if (index === -1) {
                     // Qo'shish
@@ -1237,36 +1298,72 @@
 
                 // Sevimlilar sahifasini yangilash
                 loadFavourites();
+            } else {
+                showNotification('Kontent tanlanmagan!');
             }
         }
 
         // Like iconni yangilash
         function updateLikeIcon() {
             const likeIconElement = document.getElementById('likeIcon');
-            const isLiked = favourites.findIndex(item => item.id === currentContent.id) !== -1;
-            likeIconElement.textContent = isLiked ? '❤️' : '🖤';
+            if (currentContent && likeIconElement) {
+                const isLiked = favourites.findIndex(item => item.id === currentContent.id) !== -1;
+                likeIconElement.textContent = isLiked ? '❤️' : '🖤';
+            }
         }
 
         // Watch content
         function watchContent() {
-            // Keyinroq funksiyani qo'shamiz
-            alert('Watch funksiyasi keyinroq qo\'shiladi!');
+            if (currentContent && currentContent.watchLink) {
+                // Hozirgi modalni yopib, keyin yangi tabda ochish yaxshi UX beradi.
+                closeModal('contentDetailsModal');
+                window.open(currentContent.watchLink, '_blank');
+            } else {
+                showNotification('Bu kontent uchun video havola topilmadi.');
+            }
         }
 
         // Load favourites
         function loadFavourites() {
             const favouritesGrid = document.getElementById('favouritesGrid');
-            favouritesGrid.innerHTML = favourites.map(item => createContentItem(item)).join('');
+            if (favourites.length === 0) {
+                favouritesGrid.innerHTML = '<p style="text-align: center; padding: 20px;">Sevimlilar ro\'yxati bo\'sh.</p>';
+                return;
+            }
+            // Filter out any undefined items before rendering
+            const validFavourites = favourites.filter(item => item && item.id && item.title && item.imageUrl);
+            favouritesGrid.innerHTML = validFavourites.map(item => createContentItem(item)).join('');
         }
 
         // Show modal
         function showModal(modalId) {
-            document.getElementById(modalId).style.display = 'block';
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'block';
+                // Agar modal ochilganda ichidagi video bor bo'lsa, unga focus qilish yoki boshqa action
+                if (modalId === 'contentDetailsModal') {
+                    const youtubeIframe = document.getElementById('youtubeIframe');
+                    // Agar iframe allaqachon yuklangan bo'lsa, uni qayta yoqish shart emas,
+                    // lekin agar modalni har safar qayta ochilganda videoni boshidan boshlamoqchi bo'lsangiz,
+                    // src ni qayta yuklash (source ni o'zgartirish) yoki video elementiga target qilib,
+                    // postMessage orqali play/seek komandalarini yuborish kerak bo'ladi.
+                    // Lekin oddiy holatda, modal yopilganda src ni bo'shatish yetarli.
+                }
+            }
         }
 
         // Close modal
         function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
+            const modal = document.getElementById(modalId);
+            if (modal) {
+                modal.style.display = 'none';
+                // Agar yopilayotgan modal kontent tafsilotlari modal bo'lsa,
+                // va ichida video yuklangan bo'lsa, uni pauzaga qo'yish yoki src ni bo'shatish
+                if (modalId === 'contentDetailsModal') {
+                    const youtubeIframe = document.getElementById('youtubeIframe');
+                    youtubeIframe.src = ""; // Video ijrosini to'xtatish uchun src ni bo'shatish
+                }
+            }
         }
 
           // Qora rejimni yoqish/o'chirish
@@ -1289,6 +1386,8 @@
        // Default iconni yuklash
         function uploadDefaultIcon() {
             const defaultIconUrl = 'https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png'; // Default icon manzili
+            // Rasmni bazaga yuklashni qo'llab-quvvatlash uchun shartli ravishda bajarish
+            // Agar sizning uploadingiz ishlamayotgan bo'lsa, rasmni to'g'ridan-to'g'ri setAppIcon ga yuborishingiz mumkin.
             uploadImageToImgbb(defaultIconUrl)
                 .then(response => {
                     if (response.success) {
@@ -1297,24 +1396,58 @@
                         localStorage.setItem('appIcon', uploadedIconUrl);
                     } else {
                         console.error('Default iconni yuklashda xatolik:', response.error);
+                        // Agar yuklashda xatolik bo'lsa, to'g'ridan-to'g'ri default rasmni o'rnatish
+                        setAppIcon(defaultIconUrl);
                     }
+                })
+                .catch(error => {
+                    console.error('Default iconni yuklashda umumiy xatolik:', error);
+                    setAppIcon(defaultIconUrl);
                 });
         }
 
         // Rasmni ImgBB ga yuklash
         function uploadImageToImgbb(image) {
+            // Agar image data URL bo'lsa, uni blobga aylantirish
+            if (typeof image === 'string' && image.startsWith('data:image')) {
+                const byteCharacters = atob(image.split(',')[1]);
+                const byteNumbers = new Array(byteCharacters.length);
+                for (let i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+                const byteArray = new Uint8Array(byteNumbers);
+                const blob = new Blob([byteArray], { type: 'image/png' }); // Adjust mime type if needed
+                image = blob; // Use the blob for FormData
+            } else if (typeof image === 'string') {
+                // Agar bu URL bo'lsa, uni fetch qilib blob olish (bu qiyinroq va CORS muammolari bo'lishi mumkin)
+                // Yoki IMG BB ga URL ni yuborish uchun boshqa metodni qidirish kerak.
+                // Hozircha, agar siz rasm URL sini yuklamoqchi bo'lsangiz,
+                // IMG BB API'si rasm URLsini POST body ga yuborishni qo'llab-quvvatlamaydi.
+                // Shuning uchun rasmning o'zini (blob yoki file object) yuborish kerak.
+                // Bu esa brauzerda to'g'ridan-to'g'ri URL dan amalga oshirish murakkab.
+                // Agar sizning IMG BB API kalitingiz URL yuklashni qo'llab-quvvatlasa, quyidagi kod ishlashi mumkin:
+                // formData.append('url', image); //ammo bu IMG BB uchun standart emas
+                console.error("IMG BB API URL dan rasm yuklashni qo'llab-quvvatlamaydi. Rasm blob yoki file bo'lishi kerak.");
+                return Promise.reject("IMG BB API URL yuklashni qo'llab-quvvatlamaydi.");
+            }
+
             const formData = new FormData();
-            formData.append('image', image);
+            formData.append('image', image); // 'image' nomi IMG BB API talab qilgan nom bo'lishi kerak
             formData.append('key', imgbbApiKey);
 
             return fetch('https://api.imgbb.com/1/upload', {
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
             .catch(error => {
                 console.error('Rasmni yuklashda xatolik:', error);
-                return { success: false, error: error };
+                return { success: false, error: error }; // Error ni qaytarish
             });
         }
 
@@ -1331,9 +1464,12 @@
         function handleLogout() {
             if (confirm('Haqiqatan ham chiqmoqchimisiz?')) {
                 localStorage.removeItem('userName');
+                // localStorage.removeItem('favourites'); // Agar sevimlilarni ham tozalash kerak bo'lsa
                 document.getElementById('appContainer').style.display = 'none';
                 document.getElementById('loginScreen').style.display = 'flex';
                 document.getElementById('nameInput').value = '';
+                // Sahifani qayta yuklash yoki boshlang'ich holatga keltirish
+                window.location.reload();
             }
         }
 
@@ -1351,9 +1487,67 @@
 
         // Close modals when clicking outside
         window.onclick = function(event) {
+            // Agar bosilgan element modal bo'lsa (modal divining o'zi)
             if (event.target.classList.contains('modal')) {
-                event.target.style.display = 'none';
+                // Agar bosilgan modal content emas, balki uning fon qismi bo'lsa
+                const modalId = event.target.id;
+                if (modalId) { // Modal ID borligiga ishonch hosil qilish
+                    closeModal(modalId);
+                }
             }
+        }
+        
+        // Barcha kontentlarni yuklash
+        function loadAllContent() {
+            // Clear existing allContent to avoid duplicates if this function is called multiple times
+            allContent = []; 
+            for (let tab in contentData) {
+                for (let section in contentData[tab]) {
+                    // Ensure section data exists and is an array
+                    if (Array.isArray(contentData[tab][section])) {
+                        allContent = allContent.concat(contentData[tab][section]);
+                    }
+                }
+            }
+            // Remove duplicates if any (optional, but good practice if IDs might repeat)
+            // allContent = Array.from(new Map(allContent.map(item => [item.id, item])).values());
+        }
+
+        // Qidiruvni amalga oshirish
+        function handleSearch() {
+            const searchTerm = document.getElementById('searchInput').value.trim().toLowerCase();
+            const grid = document.getElementById('contentGrid');
+
+            if (searchTerm === "") {
+                // Agar qidiruv bo'sh bo'lsa, asl kontentni qayta yuklash
+                loadContent();
+                return;
+            }
+
+            const filteredContent = allContent.filter(item => item.title.toLowerCase().includes(searchTerm));
+            displaySearchResults(filteredContent);
+        }
+
+        // Qidiruv natijalarini ko'rsatish
+        function displaySearchResults(results) {
+            const grid = document.getElementById('contentGrid');
+            if (results.length === 0) {
+                grid.innerHTML = '<p style="text-align: center; padding: 20px;">Qidiruv natijalari topilmadi.</p>';
+                return;
+            }
+            grid.innerHTML = results.map(item => createContentItem(item)).join('');
+        }
+
+        // Xabarni ko'rsatish
+        function showNotification(message) {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.style.display = 'block';
+
+            // 3 sekunddan keyin xabarni yashirish
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
         }
         
         // Telegram channelni ochish
