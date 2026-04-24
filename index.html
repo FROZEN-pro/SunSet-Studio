@@ -24,7 +24,8 @@
         .dark-mode .nav-tabs,
         .dark-mode .content-item,
         .dark-mode .profile-menu,
-        .dark-mode .announcement-item { background: #2a2a2a; color: #eee; }
+        .dark-mode .announcement-item,
+        .dark-mode .filter-container { background: #2a2a2a; color: #eee; }
         .dark-mode .section-nav { background: #1e1e1e; }
         .dark-mode .nav-tab,
         .dark-mode .section-tab,
@@ -37,6 +38,8 @@
         .dark-mode .modal-content { background: #2a2a2a; color: #eee; }
         .dark-mode .search-input { background: rgba(255,255,255,0.15); color: #fff; }
         .dark-mode .search-input::placeholder { color: #ccc; }
+        .dark-mode .filter-chip { background: #333; color: #eee; }
+        .dark-mode .filter-chip.active { background: linear-gradient(45deg, #FF6B35, #F7931E); }
 
         /* ========== LOADING SCREEN ========== */
         .loading-screen {
@@ -45,52 +48,99 @@
             background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
             display: flex; flex-direction: column;
             justify-content: center; align-items: center;
-            z-index: 9999; transition: opacity 0.5s;
+            z-index: 9999; 
+            opacity: 1;
+            transition: opacity 0.4s;
         }
-        .loading-screen.hidden { opacity: 0; pointer-events: none; }
+        .loading-screen.hidden { 
+            opacity: 0; 
+            pointer-events: none; 
+        }
         .loading-logo {
-            width: 100px; height: 100px;
-            border-radius: 50%; margin-bottom: 20px;
+            width: 120px; height: 120px;
+            border-radius: 50%; margin-bottom: 24px;
             object-fit: cover;
             animation: pulse 1.5s infinite;
+            border: 4px solid rgba(255,255,255,0.3);
         }
         @keyframes pulse {
             0%,100% { transform: scale(1); opacity:1; }
-            50% { transform: scale(1.1); opacity:0.8; }
+            50% { transform: scale(1.08); opacity:0.85; }
         }
         .loading-text {
-            color: white; font-size: 22px;
+            color: white; font-size: 26px;
             font-weight: 700; letter-spacing: 2px;
-            margin-bottom: 30px;
+            margin-bottom: 8px;
+        }
+        .loading-subtitle {
+            color: rgba(255,255,255,0.8);
+            font-size: 13px; margin-bottom: 40px;
+            letter-spacing: 1px;
         }
         .loading-bar {
-            width: 180px; height: 4px;
-            background: rgba(255,255,255,0.3);
-            border-radius: 2px; overflow: hidden;
+            width: 200px; height: 5px;
+            background: rgba(255,255,255,0.25);
+            border-radius: 3px; overflow: hidden;
+            position: relative;
         }
         .loading-fill {
-            height: 100%; background: white;
-            border-radius: 2px;
-            animation: loadfill 2s ease-in-out forwards;
+            height: 100%; 
+            background: white;
+            border-radius: 3px;
+            width: 0%;
+            transition: width 0.3s ease;
         }
-        @keyframes loadfill { from { width:0%; } to { width:100%; } }
+
+        /* ========== PULL TO REFRESH ========== */
+        .pull-to-refresh {
+            position: absolute;
+            top: -60px;
+            left: 0;
+            right: 0;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FF6B35;
+            font-size: 14px;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+        .pull-to-refresh.pulling {
+            transform: translateY(60px);
+        }
+        .pull-spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #FF6B35;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
         /* ========== LOGIN ========== */
         .login-screen {
-            display: flex; flex-direction: column;
+            display: none;
+            flex-direction: column;
             justify-content: center; align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             background: url('https://i.ibb.co/23d8q2jn/1434178-adapted-1080x2400-1759722185.jpg') center/cover no-repeat;
+            padding: 20px;
         }
-        /* ⬆️ loginBg Sheets'dan o'zgartiriladi — style attr orqali */
         .login-container {
-            background: rgba(255,255,255,0.60);
+            background: rgba(255,255,255,0.65);
             padding: 50px 40px;
             border-radius: 25px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.25);
             text-align: center;
-            min-width: 320px;
-            backdrop-filter: blur(4px);
+            width: 100%;
+            max-width: 380px;
+            backdrop-filter: blur(8px);
         }
         .logo-text {
             font-size: 32px; font-weight: 700;
@@ -100,7 +150,7 @@
             margin-bottom: 8px; letter-spacing: 2px;
         }
         .logo-subtitle {
-            font-size: 13px; color: #888;
+            font-size: 13px; color: #666;
             margin-bottom: 30px; letter-spacing: 1px;
         }
         .login-input {
@@ -132,6 +182,7 @@
             margin: 0 auto;
             background: #F8F9FA;
             min-height: 100vh;
+            position: relative;
         }
 
         /* HEADER */
@@ -155,12 +206,28 @@
             font-size: 14px; color: white;
         }
         .search-input::placeholder { color: rgba(255,255,255,0.8); }
-        .announcements-btn {
-            width: 42px; height: 42px;
+        .header-btns {
+            display: flex;
+            gap: 8px;
+        }
+        .header-btn {
+            width: 38px; height: 38px;
             background: rgba(255,255,255,0.2);
             border: none; border-radius: 50%;
             color: white; cursor: pointer;
-            font-size: 20px; flex-shrink: 0;
+            font-size: 18px; flex-shrink: 0;
+            position: relative;
+        }
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: #e74c3c;
+            color: white;
+            font-size: 10px;
+            padding: 2px 5px;
+            border-radius: 10px;
+            font-weight: 700;
         }
 
         /* NAV TABS */
@@ -185,18 +252,147 @@
             background: white; border-radius: 25px;
             padding: 5px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow-x: auto;
+            scrollbar-width: none;
         }
+        .section-nav::-webkit-scrollbar { display: none; }
         .section-tab {
-            flex: 1; padding: 12px 16px;
+            flex-shrink: 0;
+            padding: 12px 20px;
             background: none; border: none;
             border-radius: 20px; cursor: pointer;
             font-size: 13px; font-weight: 600;
             color: #999; transition: all 0.3s;
+            white-space: nowrap;
         }
         .section-tab.active {
             background: linear-gradient(45deg, #FF6B35, #F7931E);
             color: white;
         }
+
+        /* FILTER SECTION */
+        .filter-container {
+            background: white;
+            padding: 12px 16px;
+            margin: 0 16px 12px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .filter-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+        .filter-row::-webkit-scrollbar { display: none; }
+        .filter-label {
+            font-size: 12px;
+            color: #888;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .filter-chip {
+            flex-shrink: 0;
+            padding: 6px 14px;
+            background: #f5f5f5;
+            border: none;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .filter-chip.active {
+            background: linear-gradient(45deg, #FF6B35, #F7931E);
+            color: white;
+        }
+        .filter-chip:active { transform: scale(0.95); }
+
+        /* CONTINUE WATCHING */
+        .continue-section {
+            padding: 16px;
+            background: white;
+            margin: 0 16px 16px;
+            border-radius: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .continue-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .continue-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+        }
+        .continue-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding-bottom: 4px;
+        }
+        .continue-scroll::-webkit-scrollbar { display: none; }
+        .continue-item {
+            flex-shrink: 0;
+            width: 140px;
+            cursor: pointer;
+        }
+        .continue-thumb {
+            position: relative;
+            width: 140px;
+            height: 100px;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 6px;
+        }
+        .continue-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .continue-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: rgba(0,0,0,0.3);
+        }
+        .continue-progress-fill {
+            height: 100%;
+            background: #FF6B35;
+        }
+        .continue-play {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(0,0,0,0.6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+        .continue-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .dark-mode .continue-section { background: #2a2a2a; }
+        .dark-mode .continue-title { color: #fff; }
+        .dark-mode .continue-name { color: #eee; }
 
         /* CONTENT GRID */
         .content-section { padding: 0 16px 100px; }
@@ -216,6 +412,7 @@
         .content-image {
             position: relative; width: 100%;
             padding-bottom: 133%; overflow: hidden;
+            background: #f0f0f0;
         }
         .content-image img {
             position: absolute; top:0; left:0;
@@ -223,6 +420,32 @@
             transition: transform 0.3s;
         }
         .content-item:hover .content-image img { transform: scale(1.04); }
+        
+        /* BADGES */
+        .content-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            z-index: 5;
+        }
+        .badge-hot {
+            background: linear-gradient(45deg, #ff3b30, #ff9500);
+            color: white;
+        }
+        .badge-new {
+            background: linear-gradient(45deg, #34c759, #30d158);
+            color: white;
+        }
+        .badge-top {
+            background: linear-gradient(45deg, #bf5af2, #ff2d55);
+            color: white;
+        }
+
         .card-like {
             position: absolute; top: 10px; right: 10px;
             font-size: 24px;
@@ -249,14 +472,19 @@
 
         /* SKELETON */
         .skeleton {
-            background: #e0e0e0;
+            background: linear-gradient(90deg, #e0e0e0 25%, #f0f0f0 50%, #e0e0e0 75%);
+            background-size: 200% 100%;
             border-radius: 18px;
             height: 240px;
-            animation: shimmer 1.4s infinite;
+            animation: shimmer 1.5s infinite;
         }
-        .dark-mode .skeleton { background: #333; }
+        .dark-mode .skeleton { 
+            background: linear-gradient(90deg, #2a2a2a 25%, #333 50%, #2a2a2a 75%);
+            background-size: 200% 100%;
+        }
         @keyframes shimmer {
-            0%,100% { opacity:1; } 50% { opacity:0.5; }
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
         }
 
         /* EMPTY STATE */
@@ -290,7 +518,7 @@
         .bottom-nav-item .icon { font-size: 22px; display: block; margin-bottom: 2px; }
 
         /* PAGE SECTIONS */
-        .page-section { display: none; }
+        .page-section { display: none; min-height: calc(100vh - 200px); }
         .page-section.active { display: block; }
         .page-header {
             text-align: center; font-size: 20px;
@@ -332,6 +560,26 @@
         }
         .profile-name { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
         .profile-tag { font-size: 13px; color: #999; }
+
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 16px 0;
+            margin-bottom: 20px;
+        }
+        .profile-stat {
+            text-align: center;
+        }
+        .profile-stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #FF6B35;
+        }
+        .profile-stat-label {
+            font-size: 12px;
+            color: #999;
+            margin-top: 4px;
+        }
 
         .profile-menu {
             background: white; border-radius: 20px;
@@ -424,24 +672,68 @@
             color: #555; margin-bottom: 16px;
         }
         .dark-mode .content-details-desc { color: #bbb; }
-        .content-buttons {
-            display: flex; align-items: center;
-            gap: 12px; margin-top: 4px;
+        
+        .content-actions {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
         }
-        .like-icon {
-            font-size: 30px; cursor: pointer;
-            transition: transform 0.2s; flex-shrink: 0;
+        .action-btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
-        .like-icon:active { transform: scale(1.3); }
-        .watch-btn {
-            flex: 1; padding: 14px;
+        .action-btn.primary {
             background: linear-gradient(45deg, #FF6B35, #F7931E);
-            color: white; border: none;
-            border-radius: 14px; font-size: 15px;
-            font-weight: 700; cursor: pointer;
-            transition: all 0.2s; letter-spacing: 0.5px;
+            color: white;
         }
-        .watch-btn:active { transform: scale(0.97); }
+        .action-btn.secondary {
+            background: #f5f5f5;
+            color: #333;
+        }
+        .dark-mode .action-btn.secondary {
+            background: #333;
+            color: #eee;
+        }
+        .action-btn:active { transform: scale(0.95); }
+
+        /* SHARE MODAL */
+        .share-options {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-top: 20px;
+        }
+        .share-option {
+            text-align: center;
+            cursor: pointer;
+        }
+        .share-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+            font-size: 24px;
+            transition: all 0.2s;
+        }
+        .share-icon:active { transform: scale(0.9); }
+        .share-label {
+            font-size: 12px;
+            color: #666;
+        }
 
         /* SOCIAL / SUPPORT ITEMS */
         .link-item {
@@ -470,17 +762,17 @@
             white-space: nowrap;
         }
 
-        /* REFRESH BTN */
-        .refresh-btn {
-            display: block; margin: 0 auto 16px;
-            padding: 10px 24px;
-            background: none; border: 2px solid #FF6B35;
-            border-radius: 20px; color: #FF6B35;
-            font-size: 13px; font-weight: 600;
-            cursor: pointer; transition: all 0.2s;
-        }
-        .refresh-btn:active {
-            background: #FF6B35; color: white;
+        /* ERROR MESSAGE */
+        .error-message {
+            background: #fee;
+            border: 1px solid #fcc;
+            color: #c33;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin: 16px;
+            font-size: 13px;
+            line-height: 1.5;
+            display: none;
         }
 
         @media (max-width: 380px) {
@@ -495,11 +787,14 @@
 <div class="loading-screen" id="loadingScreen">
     <img class="loading-logo" src="https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png" alt="Logo" id="loadingLogo">
     <div class="loading-text" id="loadingAppName">SunSet Studio</div>
-    <div class="loading-bar"><div class="loading-fill"></div></div>
+    <div class="loading-subtitle">Ma'lumotlar yuklanmoqda...</div>
+    <div class="loading-bar">
+        <div class="loading-fill" id="loadingFill"></div>
+    </div>
 </div>
 
 <!-- ====== LOGIN ====== -->
-<div class="login-screen" id="loginScreen" style="display:none;">
+<div class="login-screen" id="loginScreen">
     <div class="login-container">
         <h1 class="logo-text" id="loginTitle">SunSet Studio</h1>
         <p class="logo-subtitle">Multfilm & Anime Dunyosi</p>
@@ -511,6 +806,12 @@
 <!-- ====== MAIN APP ====== -->
 <div class="app-container" id="appContainer">
 
+    <!-- Pull to Refresh -->
+    <div class="pull-to-refresh" id="pullRefresh">
+        <div class="pull-spinner"></div>
+        <span>Yangilanmoqda...</span>
+    </div>
+
     <!-- Header -->
     <div class="header" id="mainHeader">
         <div class="header-logo">
@@ -518,10 +819,21 @@
         </div>
         <div class="search-container">
             <input type="text" class="search-input" id="searchInput"
-                   placeholder="Nima qidiramiz..." oninput="handleSearch()">
+                   placeholder="Qidirish..." oninput="handleSearch()">
         </div>
-        <button class="announcements-btn" onclick="showModal('announcementsModal')">📢</button>
+        <div class="header-btns">
+            <button class="header-btn" onclick="showModal('filterModal')">
+                🔍
+            </button>
+            <button class="header-btn" onclick="showModal('announcementsModal')">
+                📢
+                <span class="notification-badge" id="notifBadge" style="display:none;">3</span>
+            </button>
+        </div>
     </div>
+
+    <!-- ERROR MESSAGE -->
+    <div class="error-message" id="errorMessage"></div>
 
     <!-- MAIN PAGE -->
     <div class="page-section active" id="mainPage">
@@ -529,12 +841,25 @@
             <button class="nav-tab active" onclick="switchMainTab('multfilm', this)">MULTFILM</button>
             <button class="nav-tab" onclick="switchMainTab('anime', this)">ANIME</button>
         </div>
+        
         <div class="content-section">
+            <!-- Continue Watching -->
+            <div class="continue-section" id="continueSection" style="display:none;">
+                <div class="continue-header">
+                    <div class="continue-title">▶️ Davom ettirish</div>
+                    <button style="background:none;border:none;color:#FF6B35;font-size:12px;font-weight:600;cursor:pointer;" onclick="clearContinueWatching()">Tozalash</button>
+                </div>
+                <div class="continue-scroll" id="continueScroll"></div>
+            </div>
+
+            <!-- Section Tabs -->
             <div class="section-nav">
                 <button class="section-tab active" onclick="switchSectionTab('trending', this)">🔥 Trendda</button>
                 <button class="section-tab" onclick="switchSectionTab('new', this)">✨ Yangi</button>
+                <button class="section-tab" onclick="switchSectionTab('top', this)">⭐ Top</button>
             </div>
-            <button class="refresh-btn" onclick="refreshContent()">↻ Yangilash</button>
+
+            <!-- Content Grid -->
             <div class="content-grid" id="contentGrid">
                 <div class="skeleton"></div>
                 <div class="skeleton"></div>
@@ -567,6 +892,23 @@
                 <div class="profile-name" id="profileName">Foydalanuvchi</div>
                 <div class="profile-tag">SunSet Studio a'zosi</div>
             </div>
+
+            <!-- Stats -->
+            <div class="profile-stats">
+                <div class="profile-stat">
+                    <div class="profile-stat-value" id="statWatched">0</div>
+                    <div class="profile-stat-label">Ko'rilgan</div>
+                </div>
+                <div class="profile-stat">
+                    <div class="profile-stat-value" id="statFavs">0</div>
+                    <div class="profile-stat-label">Sevimlilar</div>
+                </div>
+                <div class="profile-stat">
+                    <div class="profile-stat-value" id="statHours">0</div>
+                    <div class="profile-stat-label">Soatlar</div>
+                </div>
+            </div>
+
             <div class="profile-menu">
                 <div class="profile-menu-item" onclick="showPage('favourites')">
                     <span class="icon">❤️</span> FAVOURITES <span class="chevron">›</span>
@@ -615,9 +957,80 @@
         <div class="content-details-info" id="detailInfo"></div>
         <div class="content-details-genre" id="detailGenre"></div>
         <p class="content-details-desc" id="detailDesc"></p>
-        <div class="content-buttons">
-            <span class="like-icon" id="likeIcon" onclick="toggleLikeFromDetails()">🖤</span>
-            <button class="watch-btn" onclick="watchContent()">▶ Ko'rish</button>
+        
+        <div class="content-actions">
+            <button class="action-btn primary" onclick="watchContent()">
+                ▶️ Ko'rish
+            </button>
+            <button class="action-btn secondary" id="likeBtn" onclick="toggleLikeFromDetails()">
+                🖤 Like
+            </button>
+            <button class="action-btn secondary" onclick="showShareModal()">
+                📤 Ulashish
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- ====== FILTER MODAL ====== -->
+<div class="modal" id="filterModal">
+    <div class="modal-content">
+        <button class="close-modal" onclick="closeModal('filterModal')">×</button>
+        <div class="modal-header">🔍 FILTER</div>
+        
+        <div class="filter-container">
+            <div class="filter-label">Janr</div>
+            <div class="filter-row" id="genreFilters">
+                <button class="filter-chip active" data-filter="all">Barchasi</button>
+                <button class="filter-chip" data-filter="Action">Action</button>
+                <button class="filter-chip" data-filter="Comedy">Comedy</button>
+                <button class="filter-chip" data-filter="Drama">Drama</button>
+                <button class="filter-chip" data-filter="Fantasy">Fantasy</button>
+                <button class="filter-chip" data-filter="Romance">Romance</button>
+            </div>
+
+            <div class="filter-label" style="margin-top:16px;">Yil</div>
+            <div class="filter-row" id="yearFilters">
+                <button class="filter-chip active" data-filter="all">Barchasi</button>
+                <button class="filter-chip" data-filter="2025">2025</button>
+                <button class="filter-chip" data-filter="2024">2024</button>
+                <button class="filter-chip" data-filter="2023">2023</button>
+            </div>
+
+            <div class="filter-label" style="margin-top:16px;">Saralash</div>
+            <div class="filter-row" id="sortFilters">
+                <button class="filter-chip active" data-sort="rating">Reyting</button>
+                <button class="filter-chip" data-sort="year">Yil</button>
+                <button class="filter-chip" data-sort="title">Nom</button>
+            </div>
+        </div>
+
+        <button class="login-btn" style="margin-top:20px;" onclick="applyFilters()">Qo'llash</button>
+    </div>
+</div>
+
+<!-- ====== SHARE MODAL ====== -->
+<div class="modal" id="shareModal">
+    <div class="modal-content">
+        <button class="close-modal" onclick="closeModal('shareModal')">×</button>
+        <div class="modal-header">📤 ULASHISH</div>
+        <div class="share-options">
+            <div class="share-option" onclick="shareVia('telegram')">
+                <div class="share-icon" style="background:#0088cc;color:white;">✈️</div>
+                <div class="share-label">Telegram</div>
+            </div>
+            <div class="share-option" onclick="shareVia('copy')">
+                <div class="share-icon">📋</div>
+                <div class="share-label">Copy Link</div>
+            </div>
+            <div class="share-option" onclick="shareVia('whatsapp')">
+                <div class="share-icon" style="background:#25D366;color:white;">💬</div>
+                <div class="share-label">WhatsApp</div>
+            </div>
+            <div class="share-option" onclick="shareVia('twitter')">
+                <div class="share-icon" style="background:#1DA1F2;color:white;">🐦</div>
+                <div class="share-label">Twitter</div>
+            </div>
         </div>
     </div>
 </div>
@@ -661,6 +1074,7 @@
 <!-- NOTIFICATION -->
 <div id="notification"></div>
 
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
 <script>
 // ==================== CONFIG ====================
 const SHEETS_API = 'https://script.google.com/macros/s/AKfycbyJbK9CgqI14BjgnvA7vIzQ-byIQm_g3EFUZq1dinYXSQmw5ySQCS8e0X54HA4ZLlFR/exec';
@@ -670,11 +1084,21 @@ let currentMainTab = 'multfilm';
 let currentSection  = 'trending';
 let allContent      = [];
 let favourites      = JSON.parse(localStorage.getItem('ss_favourites') || '[]');
+let continueWatching = JSON.parse(localStorage.getItem('ss_continue') || '[]');
+let watchedContent  = JSON.parse(localStorage.getItem('ss_watched') || '[]');
 let currentContent  = null;
 let darkMode        = localStorage.getItem('ss_darkMode') === 'enabled';
 let isSearching     = false;
+let loadingProgress = 0;
 
-// Sheets'dan kelgan ma'lumotlar
+// Filters
+let activeFilters = {
+    genre: 'all',
+    year: 'all',
+    sort: 'rating'
+};
+
+// Sheets data
 let sheetsData = {
     contents     : [],
     announcements: [],
@@ -686,6 +1110,49 @@ let sheetsData = {
 // ==================== TELEGRAM ====================
 const tg = window.Telegram?.WebApp;
 if (tg) { tg.ready(); tg.expand(); }
+
+// ==================== PULL TO REFRESH ====================
+let startY = 0;
+let pullDistance = 0;
+let isRefreshing = false;
+
+document.addEventListener('touchstart', (e) => {
+    if (window.scrollY === 0 && !isRefreshing) {
+        startY = e.touches[0].clientY;
+    }
+});
+
+document.addEventListener('touchmove', (e) => {
+    if (window.scrollY === 0 && startY > 0 && !isRefreshing) {
+        pullDistance = e.touches[0].clientY - startY;
+        if (pullDistance > 0 && pullDistance < 80) {
+            const pullEl = document.getElementById('pullRefresh');
+            pullEl.style.transform = `translateY(${pullDistance}px)`;
+        }
+    }
+});
+
+document.addEventListener('touchend', async () => {
+    if (pullDistance > 60 && !isRefreshing) {
+        isRefreshing = true;
+        const pullEl = document.getElementById('pullRefresh');
+        pullEl.classList.add('pulling');
+        
+        await loadAllSheets();
+        loadContent();
+        showNotification('✅ Yangilandi!');
+        
+        setTimeout(() => {
+            pullEl.classList.remove('pulling');
+            pullEl.style.transform = '';
+            isRefreshing = false;
+        }, 800);
+    } else {
+        document.getElementById('pullRefresh').style.transform = '';
+    }
+    startY = 0;
+    pullDistance = 0;
+});
 
 // ==================== UTILS ====================
 function getEmbedUrl(url) {
@@ -706,8 +1173,22 @@ function showNotification(msg) {
     n._t = setTimeout(() => n.style.display = 'none', 2800);
 }
 
+function showError(msg) {
+    const el = document.getElementById('errorMessage');
+    el.textContent = msg;
+    el.style.display = 'block';
+    setTimeout(() => el.style.display = 'none', 5000);
+}
+
+function updateLoadingBar(percent) {
+    loadingProgress = Math.min(percent, 100);
+    const fill = document.getElementById('loadingFill');
+    if (fill) fill.style.width = loadingProgress + '%';
+}
+
 function saveFavourites() {
     localStorage.setItem('ss_favourites', JSON.stringify(favourites));
+    updateProfileStats();
 }
 
 function toggleFavourite(item) {
@@ -724,20 +1205,82 @@ function toggleFavourite(item) {
     return idx === -1;
 }
 
+function addToContinueWatching(item, progress = 10) {
+    const existing = continueWatching.findIndex(c => c.id === item.id);
+    const entry = { ...item, progress, timestamp: Date.now() };
+    
+    if (existing !== -1) {
+        continueWatching[existing] = entry;
+    } else {
+        continueWatching.unshift(entry);
+        if (continueWatching.length > 10) continueWatching.pop();
+    }
+    
+    localStorage.setItem('ss_continue', JSON.stringify(continueWatching));
+    renderContinueWatching();
+}
+
+function clearContinueWatching() {
+    if (confirm('Barcha "Davom ettirish" elementlarini o\'chirish?')) {
+        continueWatching = [];
+        localStorage.setItem('ss_continue', '[]');
+        renderContinueWatching();
+        showNotification('🗑️ Tozalandi!');
+    }
+}
+
+function addToWatched(item) {
+    if (!watchedContent.find(w => w.id === item.id)) {
+        watchedContent.push({ ...item, watchedAt: Date.now() });
+        localStorage.setItem('ss_watched', JSON.stringify(watchedContent));
+        updateProfileStats();
+    }
+}
+
+function updateProfileStats() {
+    document.getElementById('statWatched').textContent = watchedContent.length;
+    document.getElementById('statFavs').textContent = favourites.length;
+    document.getElementById('statHours').textContent = Math.floor(watchedContent.length * 0.5);
+}
+
+function getBadge(item) {
+    const rating = parseFloat(item.rating) || 0;
+    if (rating >= 9.5) return '<span class="content-badge badge-top">👑 TOP</span>';
+    if (item.section === 'new') return '<span class="content-badge badge-new">✨ NEW</span>';
+    if (item.section === 'trending') return '<span class="content-badge badge-hot">🔥 HOT</span>';
+    return '';
+}
+
 // ==================== FETCH FROM SHEETS ====================
 async function fetchSheet(sheetName) {
     try {
-        const res = await fetch(`${SHEETS_API}?sheet=${sheetName}`);
-        if (!res.ok) throw new Error('Network error');
-        return await res.json();
+        const url = `${SHEETS_API}?sheet=${sheetName}`;
+        console.log(`[SunSet] Yuklanmoqda: ${sheetName}`);
+        const res = await fetch(url);
+        
+        if (!res.ok) {
+            throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+        }
+        
+        const data = await res.json();
+        
+        if (data.error) {
+            throw new Error(data.error);
+        }
+        
+        console.log(`[SunSet] ✅ ${sheetName} yuklandi:`, data.length, 'qator');
+        return data;
+        
     } catch (e) {
-        console.warn(`[SunSet] ${sheetName} yuklanmadi:`, e.message);
+        console.error(`[SunSet] ❌ ${sheetName} xato:`, e.message);
+        showError(`⚠️ ${sheetName} yuklanmadi: ${e.message}`);
         return [];
     }
 }
 
 async function loadAllSheets() {
-    // Parallel fetch
+    updateLoadingBar(10);
+    
     const [contents, announcements, settingsArr, social, support] = await Promise.all([
         fetchSheet('Contents'),
         fetchSheet('Announcements'),
@@ -745,58 +1288,89 @@ async function loadAllSheets() {
         fetchSheet('Social'),
         fetchSheet('Support')
     ]);
+    
+    updateLoadingBar(95);
 
-    // Contents
     sheetsData.contents = (contents || []).filter(r => r.id && r.title);
     allContent = sheetsData.contents;
 
-    // Announcements — faqat active=TRUE bo'lganlar
     sheetsData.announcements = (announcements || []).filter(r =>
         String(r.active).toUpperCase() !== 'FALSE' && r.title
     );
 
-    // Settings — key-value juftligi
     sheetsData.settings = {};
     (settingsArr || []).forEach(r => {
         if (r.key) sheetsData.settings[r.key] = r.value;
     });
 
-    // Social & Support — active=TRUE
     sheetsData.social   = (social   || []).filter(r => String(r.active).toUpperCase() !== 'FALSE' && r.name);
     sheetsData.support  = (support  || []).filter(r => String(r.active).toUpperCase() !== 'FALSE' && r.name);
+
+    updateLoadingBar(100);
 
     applySettings();
     renderAnnouncements();
     renderSocial();
     renderSupport();
+    renderContinueWatching();
+    
+    // Notification badge
+    if (sheetsData.announcements.length > 0) {
+        const badge = document.getElementById('notifBadge');
+        badge.textContent = sheetsData.announcements.length;
+        badge.style.display = 'block';
+    }
+    
+    console.log('[SunSet] ✅ Barcha ma\'lumotlar yuklandi!');
 }
 
 // ==================== APPLY SETTINGS ====================
 function applySettings() {
     const s = sheetsData.settings;
 
-    // Login background
     if (s.loginBg) {
         document.getElementById('loginScreen').style.backgroundImage = `url('${s.loginBg}')`;
     }
 
-    // Logo
     const logoUrl = s.logoUrl || 'https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png';
     ['headerIcon','profileIcon','loadingLogo'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.src = logoUrl;
     });
-    // Profile logo (img.profile-logo)
-    const pLogo = document.querySelector('.profile-logo');
-    if (pLogo) pLogo.src = logoUrl;
 
-    // App name
     const appName = s.appName || 'SunSet Studio';
     document.title = appName;
     const lTitle = document.getElementById('loginTitle');
     if (lTitle) lTitle.textContent = appName;
     const laName = document.getElementById('loadingAppName');
     if (laName) laName.textContent = appName;
+}
+
+// ==================== RENDER CONTINUE WATCHING ====================
+function renderContinueWatching() {
+    const section = document.getElementById('continueSection');
+    const scroll = document.getElementById('continueScroll');
+    
+    if (continueWatching.length === 0) {
+        section.style.display = 'none';
+        return;
+    }
+    
+    section.style.display = 'block';
+    const fallback = 'https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png';
+    
+    scroll.innerHTML = continueWatching.map(item => `
+        <div class="continue-item" onclick="showContentDetails('${item.id}')">
+            <div class="continue-thumb">
+                <img src="${item.imageUrl || fallback}" onerror="this.src='${fallback}'" alt="${item.title}">
+                <div class="continue-play">▶️</div>
+                <div class="continue-progress">
+                    <div class="continue-progress-fill" style="width:${item.progress}%"></div>
+                </div>
+            </div>
+            <div class="continue-name">${item.title}</div>
+        </div>
+    `).join('');
 }
 
 // ==================== RENDER CONTENTS ====================
@@ -807,6 +1381,7 @@ function createContentItem(item) {
     return `
     <div class="content-item" onclick="showContentDetails('${item.id}')">
         <div class="content-image">
+            ${getBadge(item)}
             <img src="${item.imageUrl || fallbackImg}"
                  onerror="this.src='${fallbackImg}'"
                  alt="${item.title}" loading="lazy">
@@ -826,11 +1401,31 @@ function createContentItem(item) {
 }
 
 function getFilteredContent() {
-    return allContent.filter(item => {
+    let data = allContent.filter(item => {
         const typeMatch    = String(item.type || '').toLowerCase() === currentMainTab;
         const sectionMatch = String(item.section || '').toLowerCase() === currentSection;
         return typeMatch && sectionMatch;
     });
+    
+    // Genre filter
+    if (activeFilters.genre !== 'all') {
+        data = data.filter(item => item.genres?.includes(activeFilters.genre));
+    }
+    
+    // Year filter
+    if (activeFilters.year !== 'all') {
+        data = data.filter(item => String(item.year) === activeFilters.year);
+    }
+    
+    // Sort
+    data.sort((a, b) => {
+        if (activeFilters.sort === 'rating') return parseFloat(b.rating) - parseFloat(a.rating);
+        if (activeFilters.sort === 'year') return parseInt(b.year) - parseInt(a.year);
+        if (activeFilters.sort === 'title') return a.title.localeCompare(b.title);
+        return 0;
+    });
+    
+    return data;
 }
 
 function loadContent() {
@@ -840,7 +1435,7 @@ function loadContent() {
         grid.innerHTML = `
         <div class="empty-state">
             <div class="empty-icon">📭</div>
-            <p>Hozircha kontent yo'q</p>
+            <p>Hozircha kontent yo'q.<br>Google Sheets'ga ma'lumot qo'shing!</p>
         </div>`;
     } else {
         grid.innerHTML = data.map(createContentItem).join('');
@@ -860,15 +1455,7 @@ function loadFavourites() {
     }
 }
 
-async function refreshContent() {
-    const grid = document.getElementById('contentGrid');
-    grid.innerHTML = '<div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>';
-    await loadAllSheets();
-    loadContent();
-    showNotification('✅ Yangilandi!');
-}
-
-// ==================== RENDER ANNOUNCEMENTS ====================
+// ==================== RENDER OTHERS ====================
 function renderAnnouncements() {
     const container = document.getElementById('announcementsContainer');
     const data = sheetsData.announcements;
@@ -884,7 +1471,6 @@ function renderAnnouncements() {
     </div>`).join('');
 }
 
-// ==================== RENDER SOCIAL ====================
 function renderSocial() {
     const container = document.getElementById('socialContainer');
     const data = sheetsData.social;
@@ -900,7 +1486,6 @@ function renderSocial() {
     </a>`).join('');
 }
 
-// ==================== RENDER SUPPORT ====================
 function renderSupport() {
     const container = document.getElementById('supportContainer');
     const data = sheetsData.support;
@@ -931,20 +1516,24 @@ function showContentDetails(id) {
     const iframe = document.getElementById('youtubeIframe');
     iframe.src = getEmbedUrl(currentContent.videoUrl || '');
 
-    updateLikeIcon();
+    updateLikeBtn();
     showModal('contentDetailsModal');
+    
+    // Add to continue watching
+    addToContinueWatching(currentContent, Math.floor(Math.random() * 70) + 10);
 }
 
-function updateLikeIcon() {
-    const icon = document.getElementById('likeIcon');
-    if (!icon || !currentContent) return;
-    icon.textContent = favourites.some(f => f.id == currentContent.id) ? '❤️' : '🖤';
+function updateLikeBtn() {
+    const btn = document.getElementById('likeBtn');
+    if (!btn || !currentContent) return;
+    const liked = favourites.some(f => f.id == currentContent.id);
+    btn.innerHTML = liked ? '❤️ Liked' : '🖤 Like';
 }
 
 function toggleLikeFromDetails() {
     if (!currentContent) return;
     toggleFavourite(currentContent);
-    updateLikeIcon();
+    updateLikeBtn();
     if (document.getElementById('favouritesPage').classList.contains('active')) loadFavourites();
 }
 
@@ -959,12 +1548,60 @@ function toggleLikeFromCard(id) {
 function watchContent() {
     const link = currentContent?.watchLink || currentContent?.videoUrl;
     if (link) {
+        addToWatched(currentContent);
         closeModal('contentDetailsModal');
         window.open(link, '_blank');
     } else {
         showNotification('⚠️ Havola topilmadi');
     }
 }
+
+function showShareModal() {
+    showModal('shareModal');
+}
+
+function shareVia(platform) {
+    const title = currentContent?.title || 'SunSet Studio';
+    const url = window.location.href;
+    
+    if (platform === 'telegram') {
+        window.open(`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`);
+    } else if (platform === 'whatsapp') {
+        window.open(`https://wa.me/?text=${encodeURIComponent(title + ' ' + url)}`);
+    } else if (platform === 'twitter') {
+        window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`);
+    } else if (platform === 'copy') {
+        navigator.clipboard.writeText(url);
+        showNotification('📋 Link nusxalandi!');
+    }
+    
+    closeModal('shareModal');
+}
+
+// ==================== FILTERS ====================
+function applyFilters() {
+    // Read selected filters
+    const genreBtn = document.querySelector('#genreFilters .filter-chip.active');
+    const yearBtn = document.querySelector('#yearFilters .filter-chip.active');
+    const sortBtn = document.querySelector('#sortFilters .filter-chip.active');
+    
+    activeFilters.genre = genreBtn?.dataset.filter || 'all';
+    activeFilters.year = yearBtn?.dataset.filter || 'all';
+    activeFilters.sort = sortBtn?.dataset.sort || 'rating';
+    
+    closeModal('filterModal');
+    loadContent();
+    showNotification('✅ Filter qo\'llandi!');
+}
+
+// Setup filter chips
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('filter-chip')) {
+        const parent = e.target.parentElement;
+        parent.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+        e.target.classList.add('active');
+    }
+});
 
 // ==================== NAVIGATION ====================
 function switchMainTab(tab, el) {
@@ -1001,6 +1638,7 @@ function showPage(page) {
     if (target) target.classList.add('active');
 
     if (page === 'favourites') loadFavourites();
+    if (page === 'profile') updateProfileStats();
 }
 
 // ==================== MODAL ====================
@@ -1059,8 +1697,6 @@ function checkLogin() {
     const saved = localStorage.getItem('ss_userName');
     if (saved) {
         document.getElementById('profileName').textContent = saved;
-        document.getElementById('loginScreen').style.display = 'none';
-        document.getElementById('appContainer').style.display = 'block';
         return true;
     }
     return false;
@@ -1068,6 +1704,8 @@ function checkLogin() {
 
 // ==================== INIT ====================
 window.onload = async function () {
+    console.log('[SunSet] 🚀 Ishga tushmoqda...');
+    
     // Dark mode
     if (darkMode) {
         document.body.classList.add('dark-mode');
@@ -1086,17 +1724,27 @@ window.onload = async function () {
     });
 
     // Load all data from Sheets
-    await loadAllSheets();
+    try {
+        await loadAllSheets();
+    } catch (e) {
+        console.error('[SunSet] Yuklanishda xato:', e);
+        showError('⚠️ Ma\'lumotlar yuklanmadi. Qayta urinib ko\'ring.');
+    }
 
-    // Hide loading, show login or app
+    // Hide loading
     setTimeout(() => {
         document.getElementById('loadingScreen').classList.add('hidden');
-        if (!checkLogin()) {
-            document.getElementById('loginScreen').style.display = 'flex';
-        } else {
+        
+        const isLoggedIn = checkLogin();
+        
+        if (isLoggedIn) {
+            document.getElementById('appContainer').style.display = 'block';
             loadContent();
+            updateProfileStats();
+        } else {
+            document.getElementById('loginScreen').style.display = 'flex';
         }
-    }, 2200);
+    }, 2500);
 };
 </script>
 </body>
