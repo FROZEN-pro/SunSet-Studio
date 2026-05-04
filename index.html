@@ -705,8 +705,8 @@ body.dark .cw-name{color:#eee}
 // ⚙️ CONFIG — o'zgartiring
 // ================================================================
 const API        = 'https://script.google.com/macros/s/AKfycbyJbK9CgqI14BjgnvA7vIzQ-byIQm_g3EFUZq1dinYXSQmw5ySQCS8e0X54HA4ZLlFR/exec';
-const IMGBB_KEY  = 'ad433e82aae872eebbb30c5bfe3fac42'; // https://api.imgbb.com
-const BOT_NAME   = 'SunSetStudioBot';  // @ belgisisiz
+const IMGBB_KEY  = 'YOUR_IMGBB_API_KEY'; // https://api.imgbb.com
+const BOT_NAME   = 'YOUR_BOT_USERNAME';  // @ belgisisiz
 
 // ================================================================
 // ACHIEVEMENTS
@@ -786,32 +786,48 @@ function ago(iso){
 function FB(){return'https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png'}
 
 // ================================================================
-// MUAMMO 1 TUZATISH: Apps Script CORS muammosi
-// GET so'rov - hamma narsani URL parametr sifatida
-// POST so'rov - no-cors mode bilan (response o'qilmaydi, lekin yoziladi)
+// API FUNKSIYALARI
+// MUHIM: Barcha operatsiyalar GET orqali ishlaydi
+// Sabab: Telegram WebApp POST redirect ni to'g'ri handle qilmaydi
+// Yechim: action parametr bilan GET — Apps Script doGet'da handle
 // ================================================================
 async function apiGet(params){
-  const url=API+'?'+new URLSearchParams(params).toString();
+  // Har bir so'rovga timestamp qo'shamiz — browser cache muammosini oldini olish
+  const p = {...params, _t: Date.now()};
+  const url = API + '?' + new URLSearchParams(p).toString();
   try{
-    const r=await fetch(url);
-    if(!r.ok)throw new Error('HTTP '+r.status);
-    return await r.json();
+    const r = await fetch(url, {
+      method: 'GET',
+      cache: 'no-store',
+      redirect: 'follow'
+    });
+    if(!r.ok) throw new Error('HTTP ' + r.status);
+    const text = await r.text();
+    // Apps Script ba'zan HTML qaytaradi — xatoni ushlash
+    if(text.startsWith('<')) {
+      console.warn('[API] HTML response — Apps Script xato:', text.substring(0,200));
+      return null;
+    }
+    return JSON.parse(text);
   }catch(e){
-    console.warn('[API GET]',e.message);
+    console.warn('[API GET] xato:', e.message, '| URL:', url.substring(0,100));
     return null;
   }
 }
 
-// POST - no-cors mode: response o'qilmaydi, lekin server qabul qiladi
-function apiPost(params){
-  const body=new URLSearchParams(params);
-  // no-cors ishlatmaymiz — Apps Script CORS headerni qaytaradi
-  // Lekin fetch'ni async kutmaymiz (fire-and-forget)
-  fetch(API,{
-    method:'POST',
-    headers:{'Content-Type':'application/x-www-form-urlencoded'},
-    body:body.toString()
-  }).catch(e=>console.warn('[API POST]',e.message));
+// ================================================================
+// TUZATISH: Barcha write operatsiyalar ham GET orqali boradi
+// Sabab: Telegram Mini App da fetch POST CORS bloklaydi
+// Apps Script doGet action parametrini qabul qiladi
+async function apiPost(params){
+  // GET orqali yuboring — action parametri bilan
+  const result = await apiGet(params);
+  if(result && result.error){
+    console.warn('[API WRITE]', params.action, 'xato:', result.error);
+  } else {
+    console.log('[API WRITE]', params.action, '✅', result);
+  }
+  return result;
 }
 
 // ================================================================
@@ -838,7 +854,7 @@ function buildUser(tgUser){
     joinedAt: new Date().toISOString()
   };
   SS('ss_u',user);
-  // MUAMMO: CORS — fire-and-forget POST ishlatamiz
+  // GET orqali yuborilyapti — Apps Script V3 action=saveUser ni qabul qiladi
   apiPost({
     action:'saveUser',
     tgId:String(user.id),
