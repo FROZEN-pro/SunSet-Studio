@@ -1276,7 +1276,7 @@ async function loadSheets(){
     db.cont = [
       {id:'d1',type:'multfilm',section:'trending',title:'Kpop Demon Hunters',year:'2025',rating:'9.2',description:'K-pop qizlar guruhi demonlarga qarshi kurashadi.',genres:'Action,Music',imageUrl:'https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png',videoUrl:'https://youtu.be/yebNIHKAC4A',watchLink:'https://youtu.be/yebNIHKAC4A',likes:'12'},
       {id:'d2',type:'multfilm',section:'new',title:'Super Hero Squad',year:'2025',rating:'8.8',description:'Super qahramonlarning yangi jamoasi dunyoni qutqaradi.',genres:'Adventure',imageUrl:'https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png',videoUrl:'https://youtu.be/dQw4w9WgXcQ',watchLink:'https://youtu.be/dQw4w9WgXcQ',likes:'7'},
-      {id:'d3',type:'multfilm',section:'top',title:'Magic Quest',year:'2024',rating:'9.6',description:'Sehrli qidiruv va do'stlik haqida.',genres:'Fantasy',imageUrl:'https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png',videoUrl:'https://youtu.be/dQw4w9WgXcQ',watchLink:'https://youtu.be/dQw4w9WgXcQ',likes:'34'},
+      {id:'d3',type:'multfilm',section:'top',title:'Magic Quest',year:'2024',rating:'9.6',description:'Sehrli qidiruv va do\'stlik haqida.',genres:'Fantasy',imageUrl:'https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png',videoUrl:'https://youtu.be/dQw4w9WgXcQ',watchLink:'https://youtu.be/dQw4w9WgXcQ',likes:'34'},
       {id:'d4',type:'multfilm',section:'shorts',title:'Qisqa Tizer',year:'2025',rating:'8.5',description:'Qisqa video tizer.',genres:'Action',imageUrl:'https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png',videoUrl:'https://youtu.be/yebNIHKAC4A',watchLink:'https://youtu.be/yebNIHKAC4A',likes:'5'},
       {id:'d5',type:'anime',section:'trending',title:'Ninja Academy',year:'2025',rating:'9.1',description:'Yosh ninjalar maktabi sarguzashtlari.',genres:'Action,Adventure',imageUrl:'https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png',videoUrl:'https://youtu.be/dQw4w9WgXcQ',watchLink:'https://youtu.be/dQw4w9WgXcQ',likes:'18'},
       {id:'d6',type:'anime',section:'new',title:'Dragon Tales',year:'2025',rating:'8.9',description:'Ajdarho va shogirdlari haqida.',genres:'Fantasy,Drama',imageUrl:'https://i.ibb.co/h1BBhdh5/App-icon-for-Sun-Set.png',videoUrl:'https://youtu.be/dQw4w9WgXcQ',watchLink:'https://youtu.be/dQw4w9WgXcQ',likes:'9'},
@@ -1285,7 +1285,7 @@ async function loadSheets(){
   allContent = db.cont;
 
   db.ann  = (ann||[]).filter(r=>String(r.active).toUpperCase()!=='FALSE'&&r.title);
-  if(!db.ann.length) db.ann=[{title:'Xush kelibsiz!',text:'SunSet Studio ilovasiga xush kelibsiz! Eng yangi multfilm va animelarga ega bo'ling.',date:'2025',active:'TRUE'}];
+  if(!db.ann.length) db.ann=[{title:'Xush kelibsiz!',text:'SunSet Studio ilovasiga xush kelibsiz! Eng yangi multfilm va animelarga ega bo\'ling.',date:'2025',active:'TRUE'}];
 
   db.sett = {};
   (sett||[]).forEach(r=>{ if(r.key) db.sett[r.key]=r.value; });
@@ -1339,7 +1339,7 @@ function doLogin(){
   } else {
     // Browser test
     setupUser({id:12345,first_name:'Demo',last_name:'',username:'demo',photo_url:''});
-    toast('⚠️ Test rejimi — Telegram'da ishlating');
+    toast('⚠️ Test rejimi — Telegram\'da ishlating');
   }
 }
 
